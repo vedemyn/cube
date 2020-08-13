@@ -1,0 +1,2 @@
+musste auf x64 umschalten
+TODO: nsight installieren
