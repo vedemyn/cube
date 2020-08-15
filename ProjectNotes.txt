@@ -1,2 +1,16 @@
 musste auf x64 umschalten
 TODO: nsight installieren
+glm includes alles in cpp, spezifische in hpp
+opengl = column major
+ = im body von der glm mat4 erst spalten, dann darunter zeilen
+kameratransformation
+hilfsfunktion die eine kameratr. matrix erstellt: 
+	glm::lookAt(__kameralinse__, __punkt_zum_anschauen__, __up_vector__)
+danach noch eine perspektivische transformation
+	glm::perspective(__fov_radians__, __aspect_ratio__, __near_plane__, __far_plane__)
+		Das aber dann mit der lookat transformation multiplizieren
+
+
+bei implementation von modell
+3x3x3 array
+rotation an den achsen entlang shchauned
