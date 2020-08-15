@@ -1,12 +1,7 @@
 #pragma once
 #include "Cubie.h"
 
-enum class Axis
-{
-	X_AXIS,
-	Y_AXIS,
-	Z_AXIS
-};
+
 
 class CubeModel {
 
