@@ -14,3 +14,28 @@ danach noch eine perspektivische transformation
 bei implementation von modell
 3x3x3 array
 rotation an den achsen entlang shchauned
+
+indizierte strukturen vs nicht indizierte? vertex weglassen?
+VBO = vertex buffer object
+	= arrays wo die positionen drinstehen
+VBA = vertex buffer arrays
+	komische namensgebung
+	wie sind die einzelnen daten die pro vertex 
+	definiert sind den registern im vertex shader zugeordnet
+
+VBA und VBO laufen in vertex shader
+vertex shader wird nicht mit cpp compiliert, 
+	ist text file die reingeladen wird und runtime compiliert wird
+
+uniform data = daten bei denen fur alle vertices der zeichenbefehl der gleiche ist
+	zb transformationsmatrix
+	lauft auch in vertex shader rein
+
+resultat von vshader lauft in rasterizer (den wir nicht programmieren mussen)
+
+dann in den fragment shader (den wir wieder programmieren mussen)
+hier kann auch noch uniform data reinlaufen
+
+heute schreiben wir einfache vertex und fragment shader
+kleines rahmenprogramm mit dem man die beiden shader ladt und kompiliert und fehler zeigt
+

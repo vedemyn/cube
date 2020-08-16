@@ -18,7 +18,7 @@ struct Face {
 class Cubie
 {
 private:
-	int numberOfRelevantSides;
+	int numberOfRelevantSides = 0;
 	Face relevantFaces[3];
 
 public:

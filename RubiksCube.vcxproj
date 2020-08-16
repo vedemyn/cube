@@ -155,12 +155,30 @@
     <ClCompile Include="Cubie.cpp" />
     <ClCompile Include="GameInterface.cpp" />
     <ClCompile Include="RubiksCube.cpp" />
+    <ClCompile Include="ShaderUtil.cpp" />
+    <ClCompile Include="TestTriangle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CubeModel.h" />
     <ClInclude Include="Cubie.h" />
     <ClInclude Include="GameInterface.h" />
     <ClInclude Include="RubiksCube.h" />
+    <ClInclude Include="ShaderUtil.h" />
+    <ClInclude Include="TestTriangle.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="VSimple.glsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <FileType>Text</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </CopyFileToFolders>
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="FSimple.glsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <FileType>Document</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </CopyFileToFolders>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

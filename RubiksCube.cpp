@@ -3,8 +3,11 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
+#include "TestTriangle.h"
+
 // Collection of test classes.
 GameInterface gDummyTest;
+TestTriangle gTestTriangle;
 
 
 GameInterface* gUsedInterface;
@@ -67,7 +70,8 @@ void ShutdownSystem()
 
 int main()
 {
-	gUsedInterface = &gDummyTest;
+	//gUsedInterface = &gDummyTest;
+	gUsedInterface = &gTestTriangle;
 	GLFWwindow* window = InitializeSystem();
 	RunCoreloop(window);
 	ShutdownSystem();
