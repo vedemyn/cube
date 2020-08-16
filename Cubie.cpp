@@ -1,25 +1,20 @@
 #include "Cubie.h"
 #include <glm/gtx/rotate_vector.hpp>
 
-Cubie::Cubie(CubieType type, int position[])
+Cubie::Cubie(int position[])
 {
-	this->type = type;
-	if (type == CubieType::CENTER)
+	//cubie type can be determined by the number of 1s in the position
+	// 3 == center, 2 == middle, 1 == edge, 0 == corner lol
+	int numberOfOnesInPositionIndex = 0;
+	for (int i = 0; i < 3; i++)
 	{
-		this->numberOfRelevantSides = 0;
+		if (position[i] == 1) {
+			numberOfOnesInPositionIndex++;
+		}
 	}
-	else if (type == CubieType::MIDDLE)
-	{
-		this->numberOfRelevantSides = 1;
-	}
-	else if (type == CubieType::EDGE)
-	{
-		this->numberOfRelevantSides = 2;
-	}
-	else if (type == CubieType::CORNER)
-	{
-		this->numberOfRelevantSides = 3;
-	}
+	numberOfRelevantSides = 3 - numberOfOnesInPositionIndex;
+		
+	
 	int facesAdded = 0;
 	for (int i = 0; i < 3; i++)
 	{
@@ -68,13 +63,13 @@ Cubie Cubie::RotatedCubie(Axis rotatedAround)
 	for (int i = 0; i < numberOfRelevantSides; i++)
 	{
 		if (rotatedAround == Axis::X_AXIS) {
-			relevantFaces[i].facing = glm::rotateX(relevantFaces[i].facing, (float)glm::radians(90));
+			relevantFaces[i].facing = glm::rotateX(relevantFaces[i].facing, (float)glm::radians(90.0));
 		}
 		else if (rotatedAround == Axis::Y_AXIS) {
-			relevantFaces[i].facing = glm::rotateY(relevantFaces[i].facing, (float)glm::radians(90));
+			relevantFaces[i].facing = glm::rotateY(relevantFaces[i].facing, (float)glm::radians(90.0));
 		}
 		else if (rotatedAround == Axis::Z_AXIS) {
-			relevantFaces[i].facing = glm::rotateZ(relevantFaces[i].facing, (float)glm::radians(90));
+			relevantFaces[i].facing = glm::rotateZ(relevantFaces[i].facing, (float)glm::radians(90.0));
 		}
 	}
 	return *this;

@@ -13,6 +13,7 @@ private:
 	//	columns (back to front along z)
 	// numbers should rise with distance from 0,0,0
 	// left bottom back should be at 0,0,0
+	
 	Cubie cubies[3][3][3];
 
 public:
