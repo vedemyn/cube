@@ -39,3 +39,5 @@ hier kann auch noch uniform data reinlaufen
 heute schreiben wir einfache vertex und fragment shader
 kleines rahmenprogramm mit dem man die beiden shader ladt und kompiliert und fehler zeigt
 
+shader schreiben: zuerst versionsnummer
+

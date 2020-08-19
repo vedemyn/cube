@@ -36,6 +36,15 @@
     <ClCompile Include="TestTriangle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="CubieRenderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TestCubie.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TestCompoundCube.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameInterface.h">
@@ -56,12 +65,27 @@
     <ClInclude Include="TestTriangle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="CubieRenderer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TestCubie.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TestCompoundCube.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="FSimple.glsl">
       <Filter>Shader</Filter>
     </CopyFileToFolders>
     <CopyFileToFolders Include="VSimple.glsl">
+      <Filter>Shader</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="FColor.glsl">
+      <Filter>Shader</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="VColor.glsl">
       <Filter>Shader</Filter>
     </CopyFileToFolders>
   </ItemGroup>
