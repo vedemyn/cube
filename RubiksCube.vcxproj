@@ -155,10 +155,13 @@
     <ClCompile Include="Cubie.cpp" />
     <ClCompile Include="CubieRenderer.cpp" />
     <ClCompile Include="GameInterface.cpp" />
+    <ClCompile Include="InputSystem.cpp" />
+    <ClCompile Include="KeyboardObserver.cpp" />
     <ClCompile Include="RubiksCube.cpp" />
     <ClCompile Include="ShaderUtil.cpp" />
     <ClCompile Include="TestCompoundCube.cpp" />
     <ClCompile Include="TestCubie.cpp" />
+    <ClCompile Include="TestKey.cpp" />
     <ClCompile Include="TestTriangle.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -166,10 +169,13 @@
     <ClInclude Include="Cubie.h" />
     <ClInclude Include="CubieRenderer.h" />
     <ClInclude Include="GameInterface.h" />
+    <ClInclude Include="InputSystem.h" />
+    <ClInclude Include="KeyboardObserver.h" />
     <ClInclude Include="RubiksCube.h" />
     <ClInclude Include="ShaderUtil.h" />
     <ClInclude Include="TestCompoundCube.h" />
     <ClInclude Include="TestCubie.h" />
+    <ClInclude Include="TestKey.h" />
     <ClInclude Include="TestTriangle.h" />
   </ItemGroup>
   <ItemGroup>

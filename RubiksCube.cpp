@@ -6,12 +6,14 @@
 #include "TestTriangle.h"
 #include "TestCubie.h"
 #include "TestCompoundCube.h"
+#include "TestKey.h"
 
 // Collection of test classes.
 GameInterface gDummyTest;
 TestTriangle gTestTriangle;
 TestCubie gTestCubie;
 TestCompoundCube gTestCompoundCube;
+TestKey gTestKey;
 
 
 GameInterface* gUsedInterface;
@@ -30,7 +32,7 @@ GLFWwindow* InitializeSystem()
 	glewExperimental = GL_TRUE; // kann mit opengl function pointern arbeiten?
 	glewInit();
 	
-	gUsedInterface->Initialize();
+	gUsedInterface->Initialize(window);
 
 	return window;
 }
@@ -77,7 +79,8 @@ int main()
 	//gUsedInterface = &gDummyTest;
 	//gUsedInterface = &gTestTriangle;
 	//gUsedInterface = &gTestCubie;
-	gUsedInterface = &gTestCompoundCube;
+	//gUsedInterface = &gTestCompoundCube;
+	gUsedInterface = &gTestKey;
 	GLFWwindow* window = InitializeSystem();
 	RunCoreloop(window);
 	ShutdownSystem();
