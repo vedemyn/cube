@@ -54,6 +54,9 @@
     <ClCompile Include="TestKey.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="TestMouse.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameInterface.h">
@@ -90,6 +93,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="TestKey.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TestMouse.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

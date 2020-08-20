@@ -41,3 +41,8 @@ kleines rahmenprogramm mit dem man die beiden shader ladt und kompiliert und feh
 
 shader schreiben: zuerst versionsnummer
 
+
+
+
+maussteuerung:
+erst screen koordinaten in clip space coordinaten umrechnen
