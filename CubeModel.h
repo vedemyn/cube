@@ -19,4 +19,5 @@ private:
 public:
 	void CreateCube();
 	void RotateSlice(Axis axis, int sliceNumber, bool rotateClockwise);
+	void PrintCube();
 };

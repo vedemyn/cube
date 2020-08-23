@@ -19,7 +19,6 @@ Cubie::Cubie(int position[])
 	for (int i = 0; i < 3; i++)
 	{
 		Face face;
-		face.color = "color";
 		// if x = 0, face left
 		// if x = 2, face right
 		// if y = 0, face down
@@ -29,12 +28,15 @@ Cubie::Cubie(int position[])
 		if (position[i] == 0) {
 			if (i == 0) {
 				face.facing = glm::vec3(-1.0, 0.0, 0.0);
+				face.color = "left";
 			}
 			else if (i == 1) {
 				face.facing = glm::vec3(0.0, -1.0, 0.0);
+				face.color = "down";
 			}
 			else if (i == 2) {
 				face.facing = glm::vec3(0.0, 0.0, -1.0);
+				face.color = "back";
 			}
 			relevantFaces[facesAdded] = face;
 			facesAdded++;
@@ -42,12 +44,15 @@ Cubie::Cubie(int position[])
 		else if (position[i] == 2) {
 			if (i == 0) {
 				face.facing = glm::vec3(1.0, 0.0, 0.0);
+				face.color = "right";
 			}
 			else if (i == 1) {
 				face.facing = glm::vec3(0.0, 1.0, 0.0);
+				face.color = "up";
 			}
 			else if (i == 2) {
 				face.facing = glm::vec3(0.0, 0.0, 1.0);
+				face.color = "front";
 			}
 			relevantFaces[facesAdded] = face;
 			facesAdded++;
@@ -73,4 +78,18 @@ Cubie Cubie::RotatedCubie(Axis rotatedAround)
 		}
 	}
 	return *this;
+}
+
+std::string Cubie::FaceByFacing(glm::vec3 facing)
+{
+//	auto glm::max(facing.x, glm::max(facing.y, facing.z));
+	for (int i = 0; i < numberOfRelevantSides; i++)
+	{
+		auto temp = relevantFaces[i].facing - facing;
+		if (glm::length(temp) < 0.1f)
+		{
+			return relevantFaces[i].color;
+		}
+	}
+	return "none";
 }

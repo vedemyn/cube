@@ -25,5 +25,6 @@ public:
 	Cubie() = default;
 	Cubie(int position[]);
 	Cubie RotatedCubie(Axis rotatedAround);
+	std::string FaceByFacing(glm::vec3 facing);
 };
 

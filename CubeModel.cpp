@@ -1,4 +1,5 @@
 #include "CubeModel.h"
+#include <iostream>
 
 void CubeModel::CreateCube()
 {
@@ -97,3 +98,47 @@ void CubeModel::RotateSlice(Axis axis, int sliceNumber, bool rotateClockwise)
 
 	}
 }
+
+void CubeModel::PrintCube()
+{
+	std::cout << "Front Side: " << std::endl;
+	std::cout << " [ " << cubies[0][2][2].FaceByFacing(glm::vec3(0.0f, 0.0f, 1.0f)) << " ] " << " [ " << cubies[1][2][2].FaceByFacing(glm::vec3(0.0f, 0.0f, 1.0f)) << " ] " << " [ " << cubies[2][2][2].FaceByFacing(glm::vec3(0.0f, 0.0f, 1.0f)) << " ] " << std::endl;
+	std::cout << " [ " << cubies[0][1][2].FaceByFacing(glm::vec3(0.0f, 0.0f, 1.0f)) << " ] " << " [ " << cubies[1][1][2].FaceByFacing(glm::vec3(0.0f, 0.0f, 1.0f)) << " ] " << " [ " << cubies[2][1][2].FaceByFacing(glm::vec3(0.0f, 0.0f, 1.0f)) << " ] " << std::endl;
+	std::cout << " [ " << cubies[0][0][2].FaceByFacing(glm::vec3(0.0f, 0.0f, 1.0f)) << " ] " << " [ " << cubies[1][0][2].FaceByFacing(glm::vec3(0.0f, 0.0f, 1.0f)) << " ] " << " [ " << cubies[2][0][2].FaceByFacing(glm::vec3(0.0f, 0.0f, 1.0f)) << " ] " << std::endl;
+
+	std::cout << "Top Side: " << std::endl;
+	std::cout << " [ " << cubies[0][2][0].FaceByFacing(glm::vec3(0.0f, 1.0f, 0.0f)) << " ] " << " [ " << cubies[1][2][0].FaceByFacing(glm::vec3(0.0f, 1.0f, 0.0f)) << " ] " << " [ " << cubies[2][2][0].FaceByFacing(glm::vec3(0.0f, 1.0f, 0.0f)) << " ] " << std::endl;
+	std::cout << " [ " << cubies[0][2][1].FaceByFacing(glm::vec3(0.0f, 1.0f, 0.0f)) << " ] " << " [ " << cubies[1][2][1].FaceByFacing(glm::vec3(0.0f, 1.0f, 0.0f)) << " ] " << " [ " << cubies[2][2][1].FaceByFacing(glm::vec3(0.0f, 1.0f, 0.0f)) << " ] " << std::endl;
+	std::cout << " [ " << cubies[0][2][2].FaceByFacing(glm::vec3(0.0f, 1.0f, 0.0f)) << " ] " << " [ " << cubies[1][2][2].FaceByFacing(glm::vec3(0.0f, 1.0f, 0.0f)) << " ] " << " [ " << cubies[2][2][2].FaceByFacing(glm::vec3(0.0f, 1.0f, 0.0f)) << " ] " << std::endl;
+
+	std::cout << "Back Side: " << std::endl;
+	std::cout << " [ " << cubies[0][0][0].FaceByFacing(glm::vec3(0.0f, 0.0f, -1.0f)) << " ] " << " [ " << cubies[1][0][0].FaceByFacing(glm::vec3(0.0f, 0.0f, -1.0f)) << " ] " << " [ " << cubies[2][0][0].FaceByFacing(glm::vec3(0.0f, 0.0f, -1.0f)) << " ] " << std::endl;
+	std::cout << " [ " << cubies[0][1][0].FaceByFacing(glm::vec3(0.0f, 0.0f, -1.0f)) << " ] " << " [ " << cubies[1][1][0].FaceByFacing(glm::vec3(0.0f, 0.0f, -1.0f)) << " ] " << " [ " << cubies[2][1][0].FaceByFacing(glm::vec3(0.0f, 0.0f, -1.0f)) << " ] " << std::endl;
+	std::cout << " [ " << cubies[0][2][0].FaceByFacing(glm::vec3(0.0f, 0.0f, -1.0f)) << " ] " << " [ " << cubies[1][2][0].FaceByFacing(glm::vec3(0.0f, 0.0f, -1.0f)) << " ] " << " [ " << cubies[2][2][0].FaceByFacing(glm::vec3(0.0f, 0.0f, -1.0f)) << " ] " << std::endl;
+
+	std::cout << "Bottom Side: " << std::endl;
+	std::cout << " [ " << cubies[0][0][2].FaceByFacing(glm::vec3(0.0f, -1.0f, 0.0f)) << " ] " << " [ " << cubies[1][0][2].FaceByFacing(glm::vec3(0.0f, -1.0f, 0.0f)) << " ] " << " [ " << cubies[2][0][2].FaceByFacing(glm::vec3(0.0f, -1.0f, 0.0f)) << " ] " << std::endl;
+	std::cout << " [ " << cubies[0][0][1].FaceByFacing(glm::vec3(0.0f, -1.0f, 0.0f)) << " ] " << " [ " << cubies[1][0][1].FaceByFacing(glm::vec3(0.0f, -1.0f, 0.0f)) << " ] " << " [ " << cubies[2][0][1].FaceByFacing(glm::vec3(0.0f, -1.0f, 0.0f)) << " ] " << std::endl;
+	std::cout << " [ " << cubies[0][0][0].FaceByFacing(glm::vec3(0.0f, -1.0f, 0.0f)) << " ] " << " [ " << cubies[1][0][0].FaceByFacing(glm::vec3(0.0f, -1.0f, 0.0f)) << " ] " << " [ " << cubies[2][0][0].FaceByFacing(glm::vec3(0.0f, -1.0f, 0.0f)) << " ] " << std::endl;
+
+	std::cout << "Left Side: " << std::endl;
+	std::cout << " [ " << cubies[0][2][0].FaceByFacing(glm::vec3(-1.0f, 0.0f, 0.0f)) << " ] " << " [ " << cubies[0][2][1].FaceByFacing(glm::vec3(-1.0f, 0.0f, 0.0f)) << " ] " << " [ " << cubies[0][2][2].FaceByFacing(glm::vec3(-1.0f, 0.0f, 0.0f)) << " ] " << std::endl;
+	std::cout << " [ " << cubies[0][1][0].FaceByFacing(glm::vec3(-1.0f, 0.0f, 0.0f)) << " ] " << " [ " << cubies[0][1][1].FaceByFacing(glm::vec3(-1.0f, 0.0f, 0.0f)) << " ] " << " [ " << cubies[0][1][2].FaceByFacing(glm::vec3(-1.0f, 0.0f, 0.0f)) << " ] " << std::endl;
+	std::cout << " [ " << cubies[0][0][0].FaceByFacing(glm::vec3(-1.0f, 0.0f, 0.0f)) << " ] " << " [ " << cubies[0][0][1].FaceByFacing(glm::vec3(-1.0f, 0.0f, 0.0f)) << " ] " << " [ " << cubies[0][0][2].FaceByFacing(glm::vec3(-1.0f, 0.0f, 0.0f)) << " ] " << std::endl;
+
+	std::cout << "Right Side: " << std::endl;
+	std::cout << " [ " << cubies[2][2][2].FaceByFacing(glm::vec3(1.0f, 0.0f, 0.0f)) << " ] " << " [ " << cubies[2][2][1].FaceByFacing(glm::vec3(1.0f, 0.0f, 0.0f)) << " ] " << " [ " << cubies[2][2][0].FaceByFacing(glm::vec3(1.0f, 0.0f, 0.0f)) << " ] " << std::endl;
+	std::cout << " [ " << cubies[2][1][2].FaceByFacing(glm::vec3(1.0f, 0.0f, 0.0f)) << " ] " << " [ " << cubies[2][1][1].FaceByFacing(glm::vec3(1.0f, 0.0f, 0.0f)) << " ] " << " [ " << cubies[2][1][0].FaceByFacing(glm::vec3(1.0f, 0.0f, 0.0f)) << " ] " << std::endl;
+	std::cout << " [ " << cubies[2][0][2].FaceByFacing(glm::vec3(1.0f, 0.0f, 0.0f)) << " ] " << " [ " << cubies[2][0][1].FaceByFacing(glm::vec3(1.0f, 0.0f, 0.0f)) << " ] " << " [ " << cubies[2][0][0].FaceByFacing(glm::vec3(1.0f, 0.0f, 0.0f)) << " ] " << std::endl;
+
+	std::cout << "====================================================================================" << std::endl;
+}
+
+
+
+
+
+
+
+
+

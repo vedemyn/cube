@@ -46,3 +46,22 @@ shader schreiben: zuerst versionsnummer
 
 maussteuerung:
 erst screen koordinaten in clip space coordinaten umrechnen
+
+
+todo:
+
+color different sides differently
+check if model works correctly (text output)
+write code to rotate different slices in graphical representation (keine animation)
+animation der rotationen
+get mouse input
+logic for rotating cube depending on mouse input
+logic for rotation slices on mouse input
+add sounds
+textures???
+
+
+
+write code to randomize cube
+
+
