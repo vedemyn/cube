@@ -68,13 +68,13 @@ Cubie Cubie::RotatedCubie(Axis rotatedAround)
 	for (int i = 0; i < numberOfRelevantSides; i++)
 	{
 		if (rotatedAround == Axis::X_AXIS) {
-			relevantFaces[i].facing = glm::rotateX(relevantFaces[i].facing, (float)glm::radians(90.0));
+			relevantFaces[i].facing = glm::rotateX(relevantFaces[i].facing, (float)glm::radians(270.0));
 		}
 		else if (rotatedAround == Axis::Y_AXIS) {
-			relevantFaces[i].facing = glm::rotateY(relevantFaces[i].facing, (float)glm::radians(90.0));
+			relevantFaces[i].facing = glm::rotateY(relevantFaces[i].facing, (float)glm::radians(270.0));
 		}
 		else if (rotatedAround == Axis::Z_AXIS) {
-			relevantFaces[i].facing = glm::rotateZ(relevantFaces[i].facing, (float)glm::radians(90.0));
+			relevantFaces[i].facing = glm::rotateZ(relevantFaces[i].facing, (float)glm::radians(270.0));
 		}
 	}
 	return *this;
@@ -82,7 +82,6 @@ Cubie Cubie::RotatedCubie(Axis rotatedAround)
 
 std::string Cubie::FaceByFacing(glm::vec3 facing)
 {
-//	auto glm::max(facing.x, glm::max(facing.y, facing.z));
 	for (int i = 0; i < numberOfRelevantSides; i++)
 	{
 		auto temp = relevantFaces[i].facing - facing;
