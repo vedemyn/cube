@@ -68,7 +68,7 @@ Cubie Cubie::RotatedCubie(Axis rotatedAround)
 	for (int i = 0; i < numberOfRelevantSides; i++)
 	{
 		if (rotatedAround == Axis::X_AXIS) {
-			relevantFaces[i].facing = glm::rotateX(relevantFaces[i].facing, (float)glm::radians(270.0));
+			relevantFaces[i].facing = glm::rotateX(relevantFaces[i].facing, (float)glm::radians(270.0)); //apparently this is counter-clockwise in glm, so 270 instead of 90
 		}
 		else if (rotatedAround == Axis::Y_AXIS) {
 			relevantFaces[i].facing = glm::rotateY(relevantFaces[i].facing, (float)glm::radians(270.0));

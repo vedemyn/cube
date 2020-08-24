@@ -50,8 +50,8 @@ erst screen koordinaten in clip space coordinaten umrechnen
 
 todo:
 
-color different sides differently
-check if model works correctly (text output)
+X color different sides differently
+X check if model works correctly (text output)
 write code to rotate different slices in graphical representation (keine animation)
 animation der rotationen
 get mouse input

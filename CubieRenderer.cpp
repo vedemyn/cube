@@ -92,8 +92,30 @@ void CubieRenderer::AddSideColor(int sideType, int direction, std::vector<glm::v
 {
 	glm::vec3 color = glm::vec3(0.0f);
 
-	float baseColor = (direction == -1) ? 0.5f : 1.0f;
-	color[sideType] = baseColor;
+	if (direction == 1)
+	{
+		if (sideType == 0)
+			//left, orange
+			color = glm::vec3(1.0f, 0.349f, 0.0f);
+		if (sideType == 1) 
+			//up (down actually?), white
+			color = glm::vec3(1.0f, 1.0f, 1.0f);
+		if (sideType == 2) 
+			//back, blue
+			color = glm::vec3(0.0f, 0.271f, 0.678f);
+	}
+	else
+	{
+		if (sideType == 0) 
+			//right, red
+			color = glm::vec3(0.725f, 0.0f, 0.0f);
+		if (sideType == 1) 
+			//down (up actually), yellow
+			color = glm::vec3(1.0f, 0.835f, 0.0f);
+		if (sideType == 2) 
+			//front, green
+			color = glm::vec3(0.0f, 0.608f, 0.282f);
+	}
 
 	for (int i = 0; i < 6; ++i)
 		colorArray.push_back(color);

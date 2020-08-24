@@ -157,6 +157,7 @@
     <ClCompile Include="GameInterface.cpp" />
     <ClCompile Include="InputSystem.cpp" />
     <ClCompile Include="KeyboardObserver.cpp" />
+    <ClCompile Include="RubikGame.cpp" />
     <ClCompile Include="RubiksCube.cpp" />
     <ClCompile Include="ShaderUtil.cpp" />
     <ClCompile Include="TestCompoundCube.cpp" />
@@ -173,6 +174,7 @@
     <ClInclude Include="GameInterface.h" />
     <ClInclude Include="InputSystem.h" />
     <ClInclude Include="KeyboardObserver.h" />
+    <ClInclude Include="RubikGame.h" />
     <ClInclude Include="RubiksCube.h" />
     <ClInclude Include="ShaderUtil.h" />
     <ClInclude Include="TestCompoundCube.h" />

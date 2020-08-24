@@ -9,6 +9,7 @@
 #include "TestKey.h"
 #include "TestMouse.h"
 #include "TestModel.h"
+#include "RubikGame.h"
 
 // Collection of test classes.
 GameInterface gDummyTest;
@@ -18,7 +19,7 @@ TestCompoundCube gTestCompoundCube;
 TestKey gTestKey;
 TestMouse gTestMouse;
 TestModel gTestModel;
-
+RubikGame gRubikGame;
 
 GameInterface* gUsedInterface;
 
@@ -86,7 +87,8 @@ int main()
 	//gUsedInterface = &gTestCompoundCube;
 	//gUsedInterface = &gTestKey;
 	//gUsedInterface = &gTestMouse;
-	gUsedInterface = &gTestModel;
+	//gUsedInterface = &gTestModel;
+	gUsedInterface = &gRubikGame;
 	GLFWwindow* window = InitializeSystem();
 	RunCoreloop(window);
 	ShutdownSystem();
