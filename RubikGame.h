@@ -14,6 +14,7 @@ public:
 	virtual void Render(float aspectRatio);
 	virtual void ClearResources();
 	virtual void Update(double deltaTime);
+	void RotateSlice(Axis axis, int sliceNumber, bool clockwise);
 
 private:
 	CubieRenderer m_cubieRenderer;
@@ -22,6 +23,13 @@ private:
 	
 
 	glm::quat m_orientationQuaternion;
-	float m_turningAngle;
+	int m_currentlyRotatedSlice;
+	float m_degreesToRotate;
+	float m_animationRotationAngle;
+	float m_animationEndAngle;
+	float m_animationSpeed;
+	float m_sliceRotationDegrees[9];
+	glm::quat m_cubieRotationQuaternions[3][3][3];
+	bool m_rotating;
 };
 

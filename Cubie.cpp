@@ -58,7 +58,6 @@ Cubie::Cubie(int position[])
 			facesAdded++;
 		}
 
-
 	}
 
 }
@@ -71,7 +70,7 @@ Cubie Cubie::RotatedCubie(Axis rotatedAround)
 			relevantFaces[i].facing = glm::rotateX(relevantFaces[i].facing, (float)glm::radians(270.0)); //apparently this is counter-clockwise in glm, so 270 instead of 90
 		}
 		else if (rotatedAround == Axis::Y_AXIS) {
-			relevantFaces[i].facing = glm::rotateY(relevantFaces[i].facing, (float)glm::radians(270.0));
+			relevantFaces[i].facing = glm::rotateY(relevantFaces[i].facing, (float)glm::radians(90.0)); //axes are brainfuck
 		}
 		else if (rotatedAround == Axis::Z_AXIS) {
 			relevantFaces[i].facing = glm::rotateZ(relevantFaces[i].facing, (float)glm::radians(270.0));

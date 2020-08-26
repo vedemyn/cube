@@ -97,6 +97,7 @@ void CubeModel::RotateSlice(Axis axis, int sliceNumber, bool rotateClockwise)
 		}
 
 	}
+	//PrintCube();
 }
 
 void CubeModel::PrintCube()
