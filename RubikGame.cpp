@@ -36,12 +36,19 @@ void RubikGame::Initialize(GLFWwindow* window)
 	m_rotating = false;
 	m_animationRotationAngle = 0.0f;
 	m_animationSpeed = 120.0f;
+	for (int i = 0; i < 3; i++)
+		for (int j = 0; j < 3; j++)
+			for (int k = 0; k < 3; k++)
+			{
+				m_cubieRotationQuaternions[i][j][k] = glm::quat(1.0f, glm::vec3(0.0f, 0.0f, 0.0f));
+				m_cubieRotationMatrices[i][j][k] = glm::mat4(1.0f);
+			}
 }
 
 void RubikGame::Render(float aspectRatio)
 {
-	glm::mat4 globalTransformation = glm::perspective(glm::radians(45.0f), aspectRatio, 0.1f, 100.0f) *
-		glm::lookAt(glm::vec3(0.0f, 0.0f, -9.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f)) *
+	glm::mat4 globalTransformation = glm::perspective(glm::radians(45.0f), aspectRatio, 0.1f, 100.0f) * //projection matrix
+		glm::lookAt(glm::vec3(0.0f, 0.0f, -9.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f)) * //view matrix
 		glm::mat4_cast(m_orientationQuaternion);
 
 	float offset = m_cubieRenderer.GetCubieExtension();
@@ -49,17 +56,19 @@ void RubikGame::Render(float aspectRatio)
 		for (int j = 0; j < 3; j++)
 			for (int k = 0; k < 3; k++)
 			{
-				m_cubieRotationQuaternions[i][j][k] =
-					glm::angleAxis(glm::radians(m_sliceRotationDegrees[k + 6]), glm::vec3(0.0f, 0.0f, 1.0f)) *
-					glm::angleAxis(glm::radians(m_sliceRotationDegrees[j + 3]), glm::vec3(0.0f, -1.0f, 0.0f)) *
-					glm::angleAxis(glm::radians(m_sliceRotationDegrees[i]), glm::vec3(1.0f, 0.0f, 0.0f));
-					
+				/*
+				m_cubieRotationQuaternions[i][j][k] = m_cubieRotationQuaternions[i][j][k] *
+					glm::angleAxis(glm::radians(m_sliceRotationDegrees[k + 6] - m_oldSliceRotationDegrees[k + 6]), glm::vec3(0.0f, 0.0f, 1.0f))*
+					glm::angleAxis(glm::radians(m_sliceRotationDegrees[j + 3] - m_oldSliceRotationDegrees[j + 3]), glm::vec3(0.0f, -1.0f, 0.0f)) *
+					glm::angleAxis(glm::radians(m_sliceRotationDegrees[i] - m_oldSliceRotationDegrees[i]), glm::vec3(1.0f, 0.0f, 0.0f));
+					*/
 					
 				//	normalize( 0.5f * glm::quat(0.0f, glm::vec3(m_sliceRotationDegrees[i], m_sliceRotationDegrees[j + 3], m_sliceRotationDegrees[k + 6])) * glm::quat(1.0f, glm::vec3(0.0f, 0.0f, 0.0f)));
 				//std::cout << "input: " << m_sliceRotationDegrees[i] << ", " << m_sliceRotationDegrees[j + 3] << ", " << m_sliceRotationDegrees[k + 6] << std::endl;
 				//std::cout << "quaternion: " << m_cubieRotationQuaternions[i][j][k].w << ", " << m_cubieRotationQuaternions[i][j][k].x << ", " << m_cubieRotationQuaternions[i][j][k].y << ", " << m_cubieRotationQuaternions[i][j][k].z << std::endl;
 				glm::mat4 compound = globalTransformation;
-				// if rotating do the animation
+				//glm::mat4 compound = glm::mat4(1.0f);
+				//glm::mat4 compound = m_cubieRotationMatrices[i][j][k]; //base in 000 
 				
 				if (m_rotating)
 				{
@@ -72,67 +81,96 @@ void RubikGame::Render(float aspectRatio)
 					}
 				}
 				
+
+
+				//	m_cubieRotationMatrices[i][j][k] = compound;
+				//next we translate
 				compound = glm::translate(compound, glm::vec3((i - 1) * (offset+0.3f), (j - 1) * (offset+0.3f), (k - 1) * (offset+0.3f))); //moves the cubies to the right position
+				/*
+				glm::mat4 inverseView = glm::inverse(globalTransformation);
+				auto xaxis = glm::normalize(glm::vec3(inverseView * glm::vec4(1.0f, 0.0f, 0.0f, 0.0f)));
+				auto yaxis = glm::normalize(glm::vec3(inverseView * glm::vec4(0.0f, -1.0f, 0.0f, 0.0f)));
+				auto zaxis = glm::normalize(glm::vec3(inverseView * glm::vec4(0.0f, 0.0f, 1.0f, 0.0f)));
+				*/
 				// as soon as you're done rotating
 				//if (!m_rotating)
 				//{
-				/*
+
 				glm::quat rot = glm::angleAxis(glm::radians(0.0f), glm::vec3(1.0f, 0.0f, 0.0f));					
-				if (i == 0)// && !(m_rotating && ((m_currentlyRotatedSlice / 3) == 0) && ((m_currentlyRotatedSlice % 3) == i)))
+				if ((i == 0) && !(m_rotating && ((m_currentlyRotatedSlice / 3) == 0) && ((m_currentlyRotatedSlice % 3) == i)))
 				{
-					compound = glm::translate(compound, glm::vec3(0.0f, 0.0f, 0.0f));
+					//compound = glm::rotate(compound, m_sliceRotationDegrees[0], glm::vec3(xaxis));
 					rot = rot * glm::angleAxis(glm::radians(m_sliceRotationDegrees[0]), glm::vec3(1.0f, 0.0f, 0.0f));
 					//compound = glm::rotate(compound, glm::radians(m_sliceRotationDegrees[0]), glm::vec3(1.0f, 0.0f, 0.0f));
 				}
-				if (i == 1)// && !(m_rotating && ((m_currentlyRotatedSlice / 3) == 0) && ((m_currentlyRotatedSlice % 3) == i))) 
+				if ((i == 1) && !(m_rotating && ((m_currentlyRotatedSlice / 3) == 0) && ((m_currentlyRotatedSlice % 3) == i))) 
 				{
+					//compound = glm::rotate(compound, m_sliceRotationDegrees[1], glm::vec3(xaxis));
 					rot = rot * glm::angleAxis(glm::radians(m_sliceRotationDegrees[1]), glm::vec3(1.0f, 0.0f, 0.0f));
 					//compound = glm::rotate(compound, glm::radians(m_sliceRotationDegrees[1]), glm::vec3(1.0f, 0.0f, 0.0f));
 				}
-				if (i == 2)// && !(m_rotating && ((m_currentlyRotatedSlice / 3) == 0) && ((m_currentlyRotatedSlice % 3) == i))) 
+				if ((i == 2) && !(m_rotating && ((m_currentlyRotatedSlice / 3) == 0) && ((m_currentlyRotatedSlice % 3) == i))) 
 				{
+					//compound = glm::rotate(compound, m_sliceRotationDegrees[2], glm::vec3(xaxis));
 					rot = rot * glm::angleAxis(glm::radians(m_sliceRotationDegrees[2]), glm::vec3(1.0f, 0.0f, 0.0f));
 					//compound = glm::rotate(compound, glm::radians(m_sliceRotationDegrees[2]), glm::vec3(1.0f, 0.0f, 0.0f));
 				}
 
-				if (j == 0)// && !(m_rotating && ((m_currentlyRotatedSlice / 3) == 0) && ((m_currentlyRotatedSlice % 3) == j))) 
+				if ((j == 0) && !(m_rotating && ((m_currentlyRotatedSlice / 3) == 1) && ((m_currentlyRotatedSlice % 3) == j))) 
 				{
+					//compound = glm::rotate(compound, m_sliceRotationDegrees[3], glm::vec3(yaxis));
 					rot = rot * glm::angleAxis(glm::radians(m_sliceRotationDegrees[3]), glm::vec3(0.0f, -1.0f, 0.0f));
 					//compound = glm::rotate(compound, glm::radians(m_sliceRotationDegrees[3]), glm::vec3(0.0f, -1.0f, 0.0f)); //musste die achse umdrehen, damit sie mit meinem modell ubereinstimmt...
 				}
-				if (j == 1)// && !(m_rotating && ((m_currentlyRotatedSlice / 3) == 0) && ((m_currentlyRotatedSlice % 3) == j)))
+				if ((j == 1) && !(m_rotating && ((m_currentlyRotatedSlice / 3) == 1) && ((m_currentlyRotatedSlice % 3) == j)))
 				{
+					//compound = glm::rotate(compound, m_sliceRotationDegrees[4], glm::vec3(yaxis));
 					rot = rot * glm::angleAxis(glm::radians(m_sliceRotationDegrees[4]), glm::vec3(0.0f, -1.0f, 0.0f));
 					//compound = glm::rotate(compound, glm::radians(m_sliceRotationDegrees[4]), glm::vec3(0.0f, -1.0f, 0.0f));
 				}
-				if (j == 2)// && !(m_rotating && ((m_currentlyRotatedSlice / 3) == 0) && ((m_currentlyRotatedSlice % 3) == j)))
+				if ((j == 2) && !(m_rotating && ((m_currentlyRotatedSlice / 3) == 1) && ((m_currentlyRotatedSlice % 3) == j)))
 				{
+					//compound = glm::rotate(compound, m_sliceRotationDegrees[5], glm::vec3(yaxis));
 					rot = rot * glm::angleAxis(glm::radians(m_sliceRotationDegrees[5]), glm::vec3(0.0f, -1.0f, 0.0f));
 					//compound = glm::rotate(compound, glm::radians(m_sliceRotationDegrees[5]), glm::vec3(0.0f, -1.0f, 0.0f));
 				}
 
-				if (k == 0)// && !(m_rotating && ((m_currentlyRotatedSlice / 3) == 0) && ((m_currentlyRotatedSlice % 3) == k)))
+				if ((k == 0) && !(m_rotating && ((m_currentlyRotatedSlice / 3) == 2) && ((m_currentlyRotatedSlice % 3) == k)))
 				{
+					//compound = glm::rotate(compound, m_sliceRotationDegrees[6], glm::vec3(zaxis));
 					rot = rot * glm::angleAxis(glm::radians(m_sliceRotationDegrees[6]), glm::vec3(0.0f, 0.0f, 1.0f));
 					//compound = glm::rotate(compound, glm::radians(m_sliceRotationDegrees[6]), glm::vec3(0.0f, 0.0f, 1.0f));
 				}
-				if (k == 1)// && !(m_rotating && ((m_currentlyRotatedSlice / 3) == 0) && ((m_currentlyRotatedSlice % 3) == k)))
+				if ((k == 1) && !(m_rotating && ((m_currentlyRotatedSlice / 3) == 2) && ((m_currentlyRotatedSlice % 3) == k)))
 				{
+					//compound = glm::rotate(compound, m_sliceRotationDegrees[7], glm::vec3(zaxis));
 					rot = rot * glm::angleAxis(glm::radians(m_sliceRotationDegrees[7]), glm::vec3(0.0f, 0.0f, 1.0f));
 					//compound = glm::rotate(compound, glm::radians(m_sliceRotationDegrees[7]), glm::vec3(0.0f, 0.0f, 1.0f));
 				}
-				if (k == 2)// && !(m_rotating && ((m_currentlyRotatedSlice / 3) == 0) && ((m_currentlyRotatedSlice % 3) == k)))
+				if ((k == 2) && !(m_rotating && ((m_currentlyRotatedSlice / 3) == 2) && ((m_currentlyRotatedSlice % 3) == k)))
 				{
+					//compound = glm::rotate(compound, m_sliceRotationDegrees[8], glm::vec3(zaxis));
 					rot = rot * glm::angleAxis(glm::radians(m_sliceRotationDegrees[8]), glm::vec3(0.0f, 0.0f, 1.0f));
 					//compound = glm::rotate(compound, glm::radians(m_sliceRotationDegrees[8]), glm::vec3(0.0f, 0.0f, 1.0f));
 				}
+
+
+				// then we rotate
 				glm::mat4 rotmat = glm::mat4_cast(rot);
-				compound = compound * rotmat;
-				*/
-				compound = compound * glm::mat4_cast(m_cubieRotationQuaternions[i][j][k]);
+				if (!(m_rotating && ((m_currentlyRotatedSlice / 3) == 0) && ((m_currentlyRotatedSlice % 3) == i)))
+					compound =  compound * rotmat ;
+
+				//compound = globalTransformation * compound;
+	//			if (!(m_rotating && ((m_currentlyRotatedSlice / 3) == 0) && ((m_currentlyRotatedSlice % 3) == i)))
+		//			compound = glm::mat4_cast(m_cubieRotationQuaternions[i][j][k]) * compound;
 				m_cubieRenderer.Render(compound);
 				
 			}
+
+		for (int i = 0; i < 9; i++)
+		{
+			m_oldSliceRotationDegrees[i] = m_sliceRotationDegrees[i];
+		}
 	
 }
 
@@ -257,7 +295,11 @@ void RubikGame::RotateSlice(Axis axis, int sliceNumber, bool clockwise)
 			m_animationSpeed = 120.0f;
 		}
 
-		
+		for (int i = 0; i < 9; i++)
+		{
+			m_oldSliceRotationDegrees[i] = m_sliceRotationDegrees[i];
+		}
+
 		if (m_currentlyRotatedSlice > -1)
 		{
 			if (clockwise)

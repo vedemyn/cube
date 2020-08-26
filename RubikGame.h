@@ -29,6 +29,8 @@ private:
 	float m_animationEndAngle;
 	float m_animationSpeed;
 	float m_sliceRotationDegrees[9];
+	float m_oldSliceRotationDegrees[9];
+	glm::mat4 m_cubieRotationMatrices[3][3][3];
 	glm::quat m_cubieRotationQuaternions[3][3][3];
 	bool m_rotating;
 };
