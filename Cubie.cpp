@@ -5,6 +5,12 @@ Cubie::Cubie(int position[])
 {
 	//cubie type can be determined by the number of 1s in the position
 	// 3 == center, 2 == middle, 1 == edge, 0 == corner lol
+	colors.insert({ "RED", glm::vec3(1.0, 0.0, 0.0) });
+	colors.insert({ "GREEN", glm::vec3(0.0f, 0.608f, 0.282f) });
+	colors.insert({ "BLUE", glm::vec3(0.0f, 0.271f, 0.678f) });
+	colors.insert({ "WHITE", glm::vec3(1.0f, 1.0f, 1.0f) });
+	colors.insert({ "YELLOW", glm::vec3(1.0f, 0.835f, 0.0f) });
+	colors.insert({ "ORANGE", glm::vec3(1.0f, 0.349f, 0.0f) });
 	int numberOfOnesInPositionIndex = 0;
 	for (int i = 0; i < 3; i++)
 	{
@@ -28,33 +34,33 @@ Cubie::Cubie(int position[])
 		if (position[i] == 0) {
 			if (i == 0) {
 				face.facing = glm::vec3(-1.0, 0.0, 0.0);
-				face.color = "left";
+				face.color = colors["ORANGE"];
 			}
 			else if (i == 1) {
 				face.facing = glm::vec3(0.0, -1.0, 0.0);
-				face.color = "down";
+				face.color = colors["YELLOW"];
 			}
 			else if (i == 2) {
 				face.facing = glm::vec3(0.0, 0.0, -1.0);
-				face.color = "back";
+				face.color = colors["BLUE"];
 			}
-			relevantFaces[facesAdded] = face;
+			faces[facesAdded] = face;
 			facesAdded++;
 		}
 		else if (position[i] == 2) {
 			if (i == 0) {
 				face.facing = glm::vec3(1.0, 0.0, 0.0);
-				face.color = "right";
+				face.color = colors["RED"];
 			}
 			else if (i == 1) {
 				face.facing = glm::vec3(0.0, 1.0, 0.0);
-				face.color = "up";
+				face.color = colors["WHITE"];
 			}
 			else if (i == 2) {
 				face.facing = glm::vec3(0.0, 0.0, 1.0);
-				face.color = "front";
+				face.color = colors["GREEN"];
 			}
-			relevantFaces[facesAdded] = face;
+			faces[facesAdded] = face;
 			facesAdded++;
 		}
 
@@ -67,27 +73,27 @@ Cubie Cubie::RotatedCubie(Axis rotatedAround)
 	for (int i = 0; i < numberOfRelevantSides; i++)
 	{
 		if (rotatedAround == Axis::X_AXIS) {
-			relevantFaces[i].facing = glm::rotateX(relevantFaces[i].facing, (float)glm::radians(270.0)); //apparently this is counter-clockwise in glm, so 270 instead of 90
+			faces[i].facing = glm::rotateX(faces[i].facing, (float)glm::radians(270.0)); //apparently this is counter-clockwise in glm, so 270 instead of 90
 		}
 		else if (rotatedAround == Axis::Y_AXIS) {
-			relevantFaces[i].facing = glm::rotateY(relevantFaces[i].facing, (float)glm::radians(90.0)); //axes are brainfuck
+			faces[i].facing = glm::rotateY(faces[i].facing, (float)glm::radians(90.0)); //axes are brainfuck
 		}
 		else if (rotatedAround == Axis::Z_AXIS) {
-			relevantFaces[i].facing = glm::rotateZ(relevantFaces[i].facing, (float)glm::radians(270.0));
+			faces[i].facing = glm::rotateZ(faces[i].facing, (float)glm::radians(270.0));
 		}
 	}
 	return *this;
 }
 
-std::string Cubie::FaceByFacing(glm::vec3 facing)
+glm::vec3 Cubie::FaceByFacing(glm::vec3 facing)
 {
 	for (int i = 0; i < numberOfRelevantSides; i++)
 	{
-		auto temp = relevantFaces[i].facing - facing;
+		auto temp = faces[i].facing - facing;
 		if (glm::length(temp) < 0.1f)
 		{
-			return relevantFaces[i].color;
+			return faces[i].color;
 		}
 	}
-	return "none";
+	return glm::vec3(0.0f);
 }

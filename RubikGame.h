@@ -4,6 +4,7 @@
 #include "InputSystem.h"
 #include "CubeModel.h"
 #include <glm/ext/quaternion_float.hpp>
+#include <map>
 
 class RubikGame : 
 	public GameInterface

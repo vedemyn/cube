@@ -106,9 +106,9 @@ void CubieRenderer::AddSideColor(int sideType, int direction, std::vector<glm::v
 	}
 	else
 	{
-		if (sideType == 0) 
+		if (sideType == 0)
 			//right, red
-			color = glm::vec3(0.725f, 0.0f, 0.0f);
+			color =  glm::vec3(1.0, 0.0, 0.0);//glm::vec3(0.725f, 0.0f, 0.0f);
 		if (sideType == 1) 
 			//down (up actually), yellow
 			color = glm::vec3(1.0f, 0.835f, 0.0f);
@@ -119,6 +119,50 @@ void CubieRenderer::AddSideColor(int sideType, int direction, std::vector<glm::v
 
 	for (int i = 0; i < 6; ++i)
 		colorArray.push_back(color);
+}
+
+
+void CubieRenderer::SetColors(glm::vec3 left, glm::vec3 right, glm::vec3 up, glm::vec3 down, glm::vec3 front, glm::vec3 back)
+{
+	float floatArray[6 * 6 * 3];
+	std::vector<glm::vec3> colorField;
+	
+	for (int i = 0; i < 6; i++)
+	{
+		colorField.push_back(right);
+	}
+	for (int i = 0; i < 6; i++)
+	{
+		colorField.push_back(left);
+	}
+	for (int i = 0; i < 6; i++)
+	{
+		colorField.push_back(down);
+	}
+	for (int i = 0; i < 6; i++)
+	{
+		colorField.push_back(up);
+	}
+	for (int i = 0; i < 6; i++)
+	{
+		colorField.push_back(front);
+	}
+	for (int i = 0; i < 6; i++)
+	{
+		colorField.push_back(back);
+	}
+
+
+
+	glBindVertexArray(m_arrayBufferObject);
+	glBindBuffer(GL_ARRAY_BUFFER, m_vertexBufferObject[1]);
+	TranscribeToFloatArray(colorField, floatArray);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(floatArray), floatArray, GL_STATIC_DRAW);
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(1);
+
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindVertexArray(0);
 }
 
 void CubieRenderer::TranscribeToFloatArray(std::vector<glm::vec3>& vecArray, float* floatArray)

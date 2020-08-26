@@ -3,12 +3,15 @@
 #include <GL/glew.h>
 #include <vector>
 
+
+
 class CubieRenderer
 {
 public:
 	void Initialize();
 	void Render(const glm::mat4& transformationMatrix); //transformationMatrix gibt uns den mittelpunkt vom cubie
 	void ClearResources();
+	void SetColors(glm::vec3 left, glm::vec3 right, glm::vec3 up, glm::vec3 down, glm::vec3 front, glm::vec3 back);
 
 	float GetCubieExtension() const { return 2.0f * m_offset; }
 

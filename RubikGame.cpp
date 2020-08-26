@@ -49,9 +49,8 @@ void RubikGame::Render(float aspectRatio)
 		for (int j = 0; j < 3; j++)
 			for (int k = 0; k < 3; k++)
 			{
-					
-				glm::mat4 compound = globalTransformation;
 
+				glm::mat4 compound = globalTransformation;
 				//animation bit
 				if (m_rotating)
 				{
@@ -63,28 +62,28 @@ void RubikGame::Render(float aspectRatio)
 						compound = glm::rotate(compound, glm::radians(m_animationRotationAngle), axisVector);
 					}
 				}
-				
-				compound = glm::translate(compound, glm::vec3((i - 1) * (offset+0.3f), (j - 1) * (offset+0.3f), (k - 1) * (offset+0.3f))); //moves the cubies to the right position
 
+				compound = glm::translate(compound, glm::vec3((i - 1) * (offset + 0.3f), (j - 1) * (offset + 0.3f), (k - 1) * (offset + 0.3f))); //moves the cubies to the right position
+/*
 				//actual rotation bit
-				glm::quat rot = glm::angleAxis(glm::radians(0.0f), glm::vec3(1.0f, 0.0f, 0.0f));					
-				
+				glm::quat rot = glm::angleAxis(glm::radians(0.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+
 				//x-axis
 				if ((i == 0) && !(m_rotating && ((m_currentlyRotatedSlice / 3) == 0) && ((m_currentlyRotatedSlice % 3) == i)))
 				{
 					rot = rot * glm::angleAxis(glm::radians(m_sliceRotationDegrees[0]), glm::vec3(1.0f, 0.0f, 0.0f));
 				}
-				if ((i == 1) && !(m_rotating && ((m_currentlyRotatedSlice / 3) == 0) && ((m_currentlyRotatedSlice % 3) == i))) 
+				if ((i == 1) && !(m_rotating && ((m_currentlyRotatedSlice / 3) == 0) && ((m_currentlyRotatedSlice % 3) == i)))
 				{
 					rot = rot * glm::angleAxis(glm::radians(m_sliceRotationDegrees[1]), glm::vec3(1.0f, 0.0f, 0.0f));
 				}
-				if ((i == 2) && !(m_rotating && ((m_currentlyRotatedSlice / 3) == 0) && ((m_currentlyRotatedSlice % 3) == i))) 
+				if ((i == 2) && !(m_rotating && ((m_currentlyRotatedSlice / 3) == 0) && ((m_currentlyRotatedSlice % 3) == i)))
 				{
 					rot = rot * glm::angleAxis(glm::radians(m_sliceRotationDegrees[2]), glm::vec3(1.0f, 0.0f, 0.0f));
 				}
 
 				//y-axis
-				if ((j == 0) && !(m_rotating && ((m_currentlyRotatedSlice / 3) == 1) && ((m_currentlyRotatedSlice % 3) == j))) 
+				if ((j == 0) && !(m_rotating && ((m_currentlyRotatedSlice / 3) == 1) && ((m_currentlyRotatedSlice % 3) == j)))
 				{
 					rot = rot * glm::angleAxis(glm::radians(m_sliceRotationDegrees[3]), glm::vec3(0.0f, -1.0f, 0.0f));
 				}
@@ -115,7 +114,20 @@ void RubikGame::Render(float aspectRatio)
 				if (!(m_rotating && ((m_currentlyRotatedSlice / 3) == 0) && ((m_currentlyRotatedSlice % 3) == i)))
 					compound =  compound * rotmat ;
 
+*/
+				if (!(m_rotating && ((m_currentlyRotatedSlice / 3) == 2) && ((m_currentlyRotatedSlice % 3) == k)))
+				{
+					auto currentCubie = m_cubeModel.getCubie(2 - i, j, 2 - k);
+					auto left = currentCubie.FaceByFacing(glm::vec3(-1.0f, 0.0f, 0.0f));
+					auto right = currentCubie.FaceByFacing(glm::vec3(1.0f, 0.0f, 0.0f));
+					auto up = currentCubie.FaceByFacing(glm::vec3(0.0f, 1.0f, 0.0f));
+					auto down = currentCubie.FaceByFacing(glm::vec3(0.0f, -1.0f, 0.0f));
+					auto front = currentCubie.FaceByFacing(glm::vec3(0.0f, 0.0f, 1.0f));
+					auto back = currentCubie.FaceByFacing(glm::vec3(0.0f, 0.0f, -1.0f));
+					m_cubieRenderer.SetColors(left, right, up, down, front, back);
+				}
 				m_cubieRenderer.Render(compound);
+
 				
 			}
 
