@@ -30,6 +30,9 @@ private:
 	float m_animationEndAngle;
 	float m_animationSpeed;
 	float m_sliceRotationDegrees[9];
+	glm::vec3 m_cubeColors[3][3][3][6];
+	Axis m_currentRotationAxis;
+	bool m_clockwise;
 	bool m_rotating;
 };
 
