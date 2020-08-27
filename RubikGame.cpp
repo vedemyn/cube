@@ -237,17 +237,18 @@ void RubikGame::RotateSlice(Axis axis, int sliceNumber, bool clockwise)
 		{
 			if (clockwise)
 			{
-				if (std::abs(m_sliceRotationDegrees[m_currentlyRotatedSlice]) < 1.0f)
-				{
+				//if (std::abs(m_sliceRotationDegrees[m_currentlyRotatedSlice]) < 1.0f)
+				//{
 					m_animationRotationAngle = 360.0f;
-				}
+				//}
 			}
 			else
 			{
-				m_animationRotationAngle = std::fmod(m_sliceRotationDegrees[m_currentlyRotatedSlice], 360.0f);
+				m_animationRotationAngle = 0.0f;
+				//m_animationRotationAngle = std::fmod(m_sliceRotationDegrees[m_currentlyRotatedSlice], 360.0f);
 			}
-			m_animationEndAngle = std::fmod(m_animationRotationAngle + m_degreesToRotate, 360.0f);
-			m_sliceRotationDegrees[m_currentlyRotatedSlice] = m_animationEndAngle;
+			m_animationEndAngle = m_degreesToRotate; // std::fmod(m_animationRotationAngle + m_degreesToRotate, 360.0f);
+			//m_sliceRotationDegrees[m_currentlyRotatedSlice] = m_animationEndAngle;
 		}
 		
 		
