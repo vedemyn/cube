@@ -20,10 +20,16 @@ public:
 	bool IsRightMouseButtonDown();
 
 	void GetPickingRay(const glm::mat4& transformationMatrix, glm::vec3& startingPoint, glm::vec3& direction);
-	void GetMousePOsition(double& xpos, double& ypos);
-	
+	void GetMousePosition(double& xpos, double& ypos);
+
+	float GetDeltaMouseX();
+	float GetDeltaMouseY();
+
 private:
 	std::map<int, KeyboardObserver> m_keyMapper;
 	GLFWwindow* m_window;
+	double m_mouseX = 0.0, m_mouseY = 0.0;
+	double m_previousMouseX = 0.0, m_previousMouseY = 0.0;
+	double m_deltaMouseX = 0.0, m_deltaMouseY = 0.0;
 };
 

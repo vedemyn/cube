@@ -1,11 +1,19 @@
 #include "InputSystem.h"
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
+#include <iostream>
+
 
 void InputSystem::Update()
 {
 	for (auto i = m_keyMapper.begin(); i != m_keyMapper.end(); ++i)
-		i->second.Update();
+		i->second.Update(); 
+	m_previousMouseX = m_mouseX;
+	m_previousMouseY = m_mouseY;
+	glfwGetCursorPos(m_window, &m_mouseX, &m_mouseY); 
+	m_deltaMouseX = m_previousMouseX - m_mouseX;
+	m_deltaMouseY = m_previousMouseY - m_mouseY;
+	std::cout << m_mouseX << " : " << m_mouseY << ", Deltas: " << m_deltaMouseX << " : " << m_deltaMouseY << std::endl;
 }
 
 void InputSystem::ObserveKey(int key)
@@ -51,7 +59,20 @@ void InputSystem::GetPickingRay(const glm::mat4& transformationMatrix, glm::vec3
 	direction = glm::normalize(direction);
 }
 
-void InputSystem::GetMousePOsition(double& xpos, double& ypos)
+void InputSystem::GetMousePosition(double& xpos, double& ypos)
 {
 	glfwGetCursorPos(m_window, &xpos, &ypos);
 }
+
+float InputSystem::GetDeltaMouseX() 
+{
+	return m_deltaMouseX;
+}
+
+float InputSystem::GetDeltaMouseY() 
+{
+	return m_deltaMouseY;
+}
+
+
+

@@ -169,6 +169,13 @@ void RubikGame::Update(double deltaTime)
 	if (m_inputSystem.IsKeyDown(GLFW_KEY_LEFT))
 		yVel = glm::radians(-90.0f);
 
+
+	if (m_inputSystem.IsRightMouseButtonDown()) 
+	{
+		xVel = m_inputSystem.GetDeltaMouseY();
+		yVel = -m_inputSystem.GetDeltaMouseX();
+	}
+
 	glm::quat velocityQuaternion = glm::quat(0.0f, glm::vec3(xVel, yVel, 0.0f));
 
 	m_orientationQuaternion += 0.5f * (float)deltaTime * velocityQuaternion * m_orientationQuaternion;

@@ -54,11 +54,12 @@ X color different sides differently
 X check if model works correctly (text output)
 X write code to rotate different slices in graphical representation (keine animation)
 X animation der rotationen
+
 get mouse input
 logic for rotating cube depending on mouse input
 logic for rotation slices on mouse input
 add sounds
-textures???
+textures??? = (base texture plus coloring?)
 
 
 
