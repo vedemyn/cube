@@ -15,14 +15,18 @@ public:
 	virtual void Render(float aspectRatio);
 	virtual void ClearResources();
 	virtual void Update(double deltaTime);
-	void RotateSlice(Axis axis, int sliceNumber, bool clockwise);
 
 private:
+
+	void RotateSlice(Axis axis, int sliceNumber, bool clockwise);
+	void SendRay();
+
 	CubieRenderer m_cubieRenderer;
 	InputSystem m_inputSystem;
 	CubeModel m_cubeModel;
 	
 
+	glm::mat4 m_globalTransformation;
 	glm::quat m_orientationQuaternion;
 	int m_currentlyRotatedSlice;
 	float m_degreesToRotate;
@@ -34,5 +38,9 @@ private:
 	Axis m_currentRotationAxis;
 	bool m_clockwise;
 	bool m_rotating;
+	glm::vec3 m_initialContactPoint;
+	glm::vec3 m_contactPlaneNormal;
+	bool m_finishRotatingAfterRelease = false;
+
 };
 

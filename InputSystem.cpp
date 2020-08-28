@@ -1,7 +1,6 @@
 #include "InputSystem.h"
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
-#include <iostream>
 
 
 void InputSystem::Update()
@@ -13,7 +12,11 @@ void InputSystem::Update()
 	glfwGetCursorPos(m_window, &m_mouseX, &m_mouseY); 
 	m_deltaMouseX = m_previousMouseX - m_mouseX;
 	m_deltaMouseY = m_previousMouseY - m_mouseY;
-	std::cout << m_mouseX << " : " << m_mouseY << ", Deltas: " << m_deltaMouseX << " : " << m_deltaMouseY << std::endl;
+
+	m_previousLMBDown = m_LMBDown;
+	m_previousRMBDown = m_RMBDown;
+	m_LMBDown = glfwGetMouseButton(m_window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS;
+	m_RMBDown = glfwGetMouseButton(m_window, GLFW_MOUSE_BUTTON_RIGHT) == GLFW_PRESS;
 }
 
 void InputSystem::ObserveKey(int key)
@@ -23,12 +26,32 @@ void InputSystem::ObserveKey(int key)
 
 bool InputSystem::IsLeftMouseButtonDown()
 {
-	return glfwGetMouseButton(m_window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS;
+	return m_LMBDown;
 }
 
 bool InputSystem::IsRightMouseButtonDown()
 {
-	return glfwGetMouseButton(m_window, GLFW_MOUSE_BUTTON_RIGHT) == GLFW_PRESS;
+	return m_RMBDown;
+}
+
+bool InputSystem::WasLeftMouseButtonPressed()
+{
+	return (m_LMBDown && !m_previousLMBDown);
+}
+
+bool InputSystem::WasRightMouseButtonPressed()
+{
+	return (m_RMBDown && !m_previousRMBDown);
+}
+
+bool InputSystem::WasLeftMouseButtonReleased()
+{
+	return (!m_LMBDown && m_previousLMBDown);
+}
+
+bool InputSystem::WasRightMouseButtonReleased()
+{
+	return (!m_RMBDown && m_previousRMBDown);
 }
 
 void InputSystem::GetPickingRay(const glm::mat4& transformationMatrix, glm::vec3& startingPoint, glm::vec3& direction)

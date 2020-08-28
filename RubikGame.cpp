@@ -3,6 +3,7 @@
 #include <glm/glm.hpp>
 #include <glm/ext.hpp>
 #include <iostream>
+#include <glm/gtx/intersect.hpp>
 
 void RubikGame::Initialize(GLFWwindow* window)
 {
@@ -36,6 +37,7 @@ void RubikGame::Initialize(GLFWwindow* window)
 	m_rotating = false;
 	m_animationRotationAngle = 0.0f;
 	m_animationSpeed = 120.0f;
+	m_globalTransformation = glm::mat4(1.0f);
 	for (int i = 0; i < 3; i++)
 		for (int j = 0; j < 3; j++)
 			for (int k = 0; k < 3; k++)
@@ -53,7 +55,7 @@ void RubikGame::Initialize(GLFWwindow* window)
 
 void RubikGame::Render(float aspectRatio)
 {
-	glm::mat4 globalTransformation = glm::perspective(glm::radians(45.0f), aspectRatio, 0.1f, 100.0f) * //projection matrix
+	m_globalTransformation = glm::perspective(glm::radians(45.0f), aspectRatio, 0.1f, 100.0f) * //projection matrix
 		glm::lookAt(glm::vec3(0.0f, 0.0f, -9.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f)) * //view matrix
 		glm::mat4_cast(m_orientationQuaternion);
 
@@ -63,7 +65,7 @@ void RubikGame::Render(float aspectRatio)
 			for (int k = 0; k < 3; k++)
 			{
 
-				glm::mat4 compound = globalTransformation;
+				glm::mat4 compound = m_globalTransformation;
 				//animation bit
 				if (m_rotating)
 				{
@@ -76,17 +78,8 @@ void RubikGame::Render(float aspectRatio)
 					}
 				}
 
-				compound = glm::translate(compound, glm::vec3((i - 1) * (offset + 0.3f), (j - 1) * (offset + 0.3f), (k - 1) * (offset + 0.3f))); //moves the cubies to the right position
+				compound = glm::translate(compound, glm::vec3((i - 1) * (offset), (j - 1) * (offset ), (k - 1) * (offset))); //moves the cubies to the right position
 
-/*
-				auto currentCubie = m_cubeModel.getCubie(2 - i, j, 2 - k);
-				auto left = currentCubie.FaceByFacing(glm::vec3(-1.0f, 0.0f, 0.0f));
-				auto right = currentCubie.FaceByFacing(glm::vec3(1.0f, 0.0f, 0.0f));
-				auto up = currentCubie.FaceByFacing(glm::vec3(0.0f, 1.0f, 0.0f));
-				auto down = currentCubie.FaceByFacing(glm::vec3(0.0f, -1.0f, 0.0f));
-				auto front = currentCubie.FaceByFacing(glm::vec3(0.0f, 0.0f, 1.0f));
-				auto back = currentCubie.FaceByFacing(glm::vec3(0.0f, 0.0f, -1.0f));
-				*/
 				auto currentCubie = m_cubeModel.getCubie(2 - i, j, 2 - k);
 
 				if (!m_rotating)
@@ -157,6 +150,7 @@ void RubikGame::Update(double deltaTime)
 		RotateSlice(Axis::Z_AXIS, 2, false);
 
 
+
 	float xVel = 0.0f;
 	if (m_inputSystem.IsKeyDown(GLFW_KEY_UP))
 		xVel = glm::radians(90.0f);
@@ -176,6 +170,18 @@ void RubikGame::Update(double deltaTime)
 		yVel = -m_inputSystem.GetDeltaMouseX();
 	}
 
+	if (m_inputSystem.WasLeftMouseButtonReleased())
+	{
+		m_rotating = false;
+		if (m_finishRotatingAfterRelease)
+			RotateSlice(m_currentRotationAxis, m_currentlyRotatedSlice, m_clockwise);
+	}
+	
+	if (m_inputSystem.IsLeftMouseButtonDown())
+	{
+		SendRay();
+	}
+
 	glm::quat velocityQuaternion = glm::quat(0.0f, glm::vec3(xVel, yVel, 0.0f));
 
 	m_orientationQuaternion += 0.5f * (float)deltaTime * velocityQuaternion * m_orientationQuaternion;
@@ -185,7 +191,7 @@ void RubikGame::Update(double deltaTime)
 	{
 		m_animationRotationAngle += m_animationSpeed * (float) deltaTime;
 	}
-	//std::cout << "" << m_animationRotationAngle << ", " << m_animationEndAngle << ", " << std::abs(m_animationRotationAngle - m_animationEndAngle) << std::endl;
+
 	if (std::abs(std::abs(std::fmod(m_animationRotationAngle, 360.0f)) - m_animationEndAngle) < 1.0f ) 
 	{ 
 		m_rotating = false;
@@ -244,18 +250,13 @@ void RubikGame::RotateSlice(Axis axis, int sliceNumber, bool clockwise)
 		{
 			if (clockwise)
 			{
-				//if (std::abs(m_sliceRotationDegrees[m_currentlyRotatedSlice]) < 1.0f)
-				//{
-					m_animationRotationAngle = 360.0f;
-				//}
+				m_animationRotationAngle = 360.0f;
 			}
 			else
 			{
 				m_animationRotationAngle = 0.0f;
-				//m_animationRotationAngle = std::fmod(m_sliceRotationDegrees[m_currentlyRotatedSlice], 360.0f);
 			}
-			m_animationEndAngle = m_degreesToRotate; // std::fmod(m_animationRotationAngle + m_degreesToRotate, 360.0f);
-			//m_sliceRotationDegrees[m_currentlyRotatedSlice] = m_animationEndAngle;
+			m_animationEndAngle = m_degreesToRotate; 
 		}
 		
 		
@@ -271,5 +272,128 @@ void RubikGame::RotateSlice(Axis axis, int sliceNumber, bool clockwise)
 		}
 		m_cubeModel.RotateSlice(m_currentRotationAxis, sliceNumber, m_clockwise);
 		
+	}
+}
+
+void RubikGame::SendRay()
+{
+	if (!m_rotating) {
+		m_rotating = true;
+		glm::vec3 rayPosition, rayDirection;
+		m_inputSystem.GetPickingRay(m_globalTransformation, rayPosition, rayDirection);
+
+		std::vector<glm::vec3> sideNormals;
+
+		sideNormals.push_back(glm::vec3(0.0f, 0.0f, -1.0f)); //front normal
+		sideNormals.push_back(glm::vec3(0.0f, 0.0f, 1.0f)); //back normal
+		sideNormals.push_back(glm::vec3(1.0f, 0.0f, 0.0f)); //left normal
+		sideNormals.push_back(glm::vec3(-1.0f, 0.0f, 0.0f)); //right normal
+		sideNormals.push_back(glm::vec3(0.0f, 1.0f, 0.0f)); //up normal
+		sideNormals.push_back(glm::vec3(0.0f, -1.0f, 0.0f)); //down normal
+
+
+		if (m_inputSystem.WasLeftMouseButtonPressed()) //just when the mouse is first pressed
+		{
+			m_contactPlaneNormal = glm::vec3(0.0f);
+			m_initialContactPoint = glm::vec3(0.0f);
+			m_finishRotatingAfterRelease = false;
+			for (int i = 0; i < 6; i++)
+			{
+				if (glm::dot(rayDirection, sideNormals[i]) < 0.0f)
+				{
+					float alpha;
+					glm::vec3 planeOrigin = 1.5f * sideNormals[i];
+					glm::intersectRayPlane(rayPosition, normalize(rayDirection), planeOrigin, normalize(sideNormals[i]), alpha);
+					glm::vec3 intersectionPoint = rayPosition + alpha * normalize(rayDirection);
+					if (i / 2 == 0) //z-axis planes - front and back
+					{
+						if ((std::abs(intersectionPoint.z) == 1.5f) && (std::abs(intersectionPoint.x) <= 1.5f) && (std::abs(intersectionPoint.y) <= 1.5f))
+						{
+							m_contactPlaneNormal = sideNormals[i];
+							m_initialContactPoint = intersectionPoint;
+						}
+					}
+					else if (i / 2 == 1) // x-axis planes - left and right
+					{
+						if ((std::abs(intersectionPoint.x) == 1.5f) && (std::abs(intersectionPoint.z) <= 1.5f) && (std::abs(intersectionPoint.y) <= 1.5f))
+						{
+							m_contactPlaneNormal = sideNormals[i];
+							m_initialContactPoint = intersectionPoint;
+						}
+					}
+					else // y-axis planes - top and bottom
+					{
+						if ((std::abs(intersectionPoint.y) == 1.5f) && (std::abs(intersectionPoint.z) <= 1.5f) && (std::abs(intersectionPoint.x) <= 1.5f))
+						{
+							m_contactPlaneNormal = sideNormals[i];
+							m_initialContactPoint = intersectionPoint;
+						}
+					}
+
+				}
+
+			}
+		}
+		else if (m_contactPlaneNormal != glm::vec3(0.0f) && m_initialContactPoint != glm::vec3(0.0f))
+		{
+			float alpha;
+			glm::vec3 planeOrigin = 1.5f * m_contactPlaneNormal;
+			glm::intersectRayPlane(rayPosition, normalize(rayDirection), planeOrigin, normalize(m_contactPlaneNormal), alpha);
+			glm::vec3 intersectionPoint = rayPosition + alpha * normalize(rayDirection);
+			glm::vec3 movementVector = m_initialContactPoint - intersectionPoint;
+
+			if (glm::distance(m_initialContactPoint, intersectionPoint) > 0.2f)
+			{
+				if (std::abs(m_contactPlaneNormal.x) > 0.9) {
+					//not x-axis
+					if (std::abs(movementVector.y) > std::abs(movementVector.z))
+					{
+						m_currentRotationAxis = Axis::Z_AXIS;
+						m_clockwise = ((movementVector.y < 0.0f) == (m_contactPlaneNormal.x < 0.0f)); //flipped weil modellachse weird ist, selber schuld - meine achsen sind generell komisch
+						m_currentlyRotatedSlice = (m_initialContactPoint.z < -0.5f) ? 6 : (m_initialContactPoint.z > 0.5f) ? 8 : 7;
+					}
+					else
+					{
+						m_currentRotationAxis = Axis::Y_AXIS;
+						m_clockwise = ((movementVector.z < 0.0f) == (m_contactPlaneNormal.x < 0.0f));
+						m_currentlyRotatedSlice = (m_initialContactPoint.y < -0.5f) ? 3 : (m_initialContactPoint.y > 0.5f) ? 5 : 4;
+					}
+				}
+				if (std::abs(m_contactPlaneNormal.y) > 0.9) {
+					//not y-axis
+					if (std::abs(movementVector.x) > std::abs(movementVector.z))
+					{
+						m_currentRotationAxis = Axis::Z_AXIS;
+						m_clockwise = ((movementVector.x > 0.0f) == (m_contactPlaneNormal.y < 0.0f));
+						m_currentlyRotatedSlice = (m_initialContactPoint.z < -0.5f) ? 6 : (m_initialContactPoint.z > 0.5f) ? 8 : 7;
+					}
+					else
+					{
+						m_currentRotationAxis = Axis::X_AXIS;
+						m_clockwise = ((movementVector.z < 0.0f) == (m_contactPlaneNormal.y < 0.0f));
+						m_currentlyRotatedSlice = (m_initialContactPoint.x < -0.5f) ? 0 : (m_initialContactPoint.x > 0.5f) ? 2 : 1;
+					}
+				}
+				if (std::abs(m_contactPlaneNormal.z) > 0.9) {
+					//not z-axis
+					if (std::abs(movementVector.x) > std::abs(movementVector.y))
+					{
+						m_currentRotationAxis = Axis::Y_AXIS;
+						m_clockwise = ((movementVector.x > 0.0f) == (m_contactPlaneNormal.z < 0.0f));
+						m_currentlyRotatedSlice = (m_initialContactPoint.y < -0.5f) ? 3 : (m_initialContactPoint.y > 0.5f) ? 5 : 4;
+					}
+					else
+					{
+						m_currentRotationAxis = Axis::X_AXIS;
+						m_clockwise = ((movementVector.y > 0.0f) == (m_contactPlaneNormal.z < 0.0f));
+						m_currentlyRotatedSlice = (m_initialContactPoint.x < -0.5f) ? 0 : (m_initialContactPoint.x > 0.5f) ? 2 : 1;
+					}
+				}
+			}
+
+			m_finishRotatingAfterRelease = (glm::distance(m_initialContactPoint, intersectionPoint) > 0.5f);
+
+
+		}
 	}
 }

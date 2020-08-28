@@ -18,6 +18,10 @@ public:
 
 	bool IsLeftMouseButtonDown();
 	bool IsRightMouseButtonDown();
+	bool WasLeftMouseButtonPressed();
+	bool WasRightMouseButtonPressed();
+	bool WasLeftMouseButtonReleased();
+	bool WasRightMouseButtonReleased();
 
 	void GetPickingRay(const glm::mat4& transformationMatrix, glm::vec3& startingPoint, glm::vec3& direction);
 	void GetMousePosition(double& xpos, double& ypos);
@@ -31,5 +35,9 @@ private:
 	double m_mouseX = 0.0, m_mouseY = 0.0;
 	double m_previousMouseX = 0.0, m_previousMouseY = 0.0;
 	double m_deltaMouseX = 0.0, m_deltaMouseY = 0.0;
+	bool m_LMBDown = false;
+	bool m_previousLMBDown = false;
+	bool m_RMBDown = false;
+	bool m_previousRMBDown = false;
 };
 
