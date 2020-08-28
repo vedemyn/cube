@@ -6,10 +6,10 @@
 void InputSystem::Update()
 {
 	for (auto i = m_keyMapper.begin(); i != m_keyMapper.end(); ++i)
-		i->second.Update(); 
+		i->second.Update();
 	m_previousMouseX = m_mouseX;
 	m_previousMouseY = m_mouseY;
-	glfwGetCursorPos(m_window, &m_mouseX, &m_mouseY); 
+	glfwGetCursorPos(m_window, &m_mouseX, &m_mouseY);
 	m_deltaMouseX = m_previousMouseX - m_mouseX;
 	m_deltaMouseY = m_previousMouseY - m_mouseY;
 
@@ -87,12 +87,12 @@ void InputSystem::GetMousePosition(double& xpos, double& ypos)
 	glfwGetCursorPos(m_window, &xpos, &ypos);
 }
 
-float InputSystem::GetDeltaMouseX() 
+float InputSystem::GetDeltaMouseX()
 {
 	return m_deltaMouseX;
 }
 
-float InputSystem::GetDeltaMouseY() 
+float InputSystem::GetDeltaMouseY()
 {
 	return m_deltaMouseY;
 }

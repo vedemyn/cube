@@ -6,7 +6,7 @@
 #include <glm/ext/quaternion_float.hpp>
 #include <map>
 
-class RubikGame : 
+class RubikGame :
 	public GameInterface
 {
 public:
@@ -18,13 +18,13 @@ public:
 
 private:
 
-	void RotateSlice(Axis axis, int sliceNumber, bool clockwise);
+	void RotateSlice(Axis axis, int sliceNumber, bool clockwise, bool mouseRotation);
 	void SendRay();
 
 	CubieRenderer m_cubieRenderer;
 	InputSystem m_inputSystem;
 	CubeModel m_cubeModel;
-	
+
 
 	glm::mat4 m_globalTransformation;
 	glm::quat m_orientationQuaternion;
@@ -41,6 +41,7 @@ private:
 	glm::vec3 m_initialContactPoint;
 	glm::vec3 m_contactPlaneNormal;
 	bool m_finishRotatingAfterRelease = false;
+	bool m_freezeAutomaticRotation = false;
 
 };
 
