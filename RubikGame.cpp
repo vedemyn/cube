@@ -4,6 +4,7 @@
 #include <glm/ext.hpp>
 #include <iostream>
 #include <glm/gtx/intersect.hpp>
+#include <Windows.h>
 
 void RubikGame::Initialize(GLFWwindow* window)
 {
@@ -211,6 +212,7 @@ void RubikGame::RotateSlice(Axis axis, int sliceNumber, bool clockwise, bool mou
 {
 	if (!m_rotating)
 	{
+		PlaySound(TEXT("MovingStones.wav"), NULL, SND_ASYNC);
 		m_rotating = true;
 		m_clockwise = clockwise;
 		m_currentRotationAxis = axis;
