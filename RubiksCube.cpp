@@ -85,13 +85,13 @@ int main()
 {
 	//gUsedInterface = &gDummyTest;
 	//gUsedInterface = &gTestTriangle;
-	gUsedInterface = &gTestCubie;
+	//gUsedInterface = &gTestCubie;
 	//gUsedInterface = &gTestCompoundCube;
 	//gUsedInterface = &gTestKey;
 	//gUsedInterface = &gTestMouse;
 	//gUsedInterface = &gTestModel;
 	//gUsedInterface = &gTestTexture;
-	//gUsedInterface = &gRubikGame;
+	gUsedInterface = &gRubikGame;
 	GLFWwindow* window = InitializeSystem();
 	RunCoreloop(window);
 	ShutdownSystem();

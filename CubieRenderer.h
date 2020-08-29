@@ -25,8 +25,8 @@ private:
 
 
 	GLuint m_arrayBufferObject;
-	//GLuint m_vertexBufferObject[2]; //2 weil position UND farbe
-	GLuint m_vertexBufferObject; //2 weil position UND farbe
+	GLuint m_vertexBufferObject[2]; //2 weil position UND farbe
+	//GLuint m_vertexBufferObject; //2 weil position UND farbe
 	GLuint m_shaderProgram;
 	GLint m_transformLocation;
 	GLuint m_texture;

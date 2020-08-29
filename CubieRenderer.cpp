@@ -27,28 +27,27 @@ void CubieRenderer::Initialize()
 	m_transformLocation = glGetUniformLocation(m_shaderProgram, "transformation");
 
 	glGenVertexArrays(1, &m_arrayBufferObject);
-	//glGenBuffers(2, m_vertexBufferObject); //wir wollen 2, pos + col
-	glGenBuffers(1, &m_vertexBufferObject);
+	glGenBuffers(2, m_vertexBufferObject); //wir wollen 2, pos + col
+	//glGenBuffers(1, &m_vertexBufferObject);
 
 
 	glBindVertexArray(m_arrayBufferObject);
 
-	//glBindBuffer(GL_ARRAY_BUFFER, m_vertexBufferObject[0]);
-	glBindBuffer(GL_ARRAY_BUFFER, m_vertexBufferObject);
+	glBindBuffer(GL_ARRAY_BUFFER, m_vertexBufferObject[0]);
+	//glBindBuffer(GL_ARRAY_BUFFER, m_vertexBufferObject);
 	TranscribeToFloatArray(positionField, floatArray);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(floatArray), floatArray, GL_STATIC_DRAW);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
-	/*
-	   glBindBuffer(GL_ARRAY_BUFFER, m_vertexBufferObject[1]);
-	   TranscribeToFloatArray(colorField, floatArray);
-	   glBufferData(GL_ARRAY_BUFFER, sizeof(floatArray), floatArray, GL_STATIC_DRAW);
-	   glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-	   glEnableVertexAttribArray(1);
-   */
 
-   //glBindBuffer(GL_ARRAY_BUFFER, 0);
-   //glBindVertexArray(0);
+	glBindBuffer(GL_ARRAY_BUFFER, m_vertexBufferObject[1]);
+	TranscribeToFloatArray(colorField, floatArray);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(floatArray), floatArray, GL_STATIC_DRAW);
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(1);
+
+	//glBindBuffer(GL_ARRAY_BUFFER, 0);
+	//glBindVertexArray(0);
 	glBindVertexArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
@@ -98,8 +97,8 @@ void CubieRenderer::Render(const glm::mat4& transformationMatrix)
 
 void CubieRenderer::ClearResources()
 {
-	//glDeleteBuffers(2, m_vertexBufferObject); 
-	glDeleteBuffers(1, &m_vertexBufferObject);
+	glDeleteBuffers(2, m_vertexBufferObject);
+	//glDeleteBuffers(1, &m_vertexBufferObject);
 	glDeleteVertexArrays(1, &m_arrayBufferObject);
 	glDeleteProgram(m_shaderProgram);
 
@@ -168,7 +167,7 @@ void CubieRenderer::AddSideColor(int sideType, int direction, std::vector<glm::v
 
 void CubieRenderer::SetColors(glm::vec3 left, glm::vec3 right, glm::vec3 up, glm::vec3 down, glm::vec3 front, glm::vec3 back)
 {
-	/*
+	
 	float floatArray[6 * 6 * 3];
 	std::vector<glm::vec3> colorField;
 
