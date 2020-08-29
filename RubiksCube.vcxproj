@@ -165,6 +165,7 @@
     <ClCompile Include="TestKey.cpp" />
     <ClCompile Include="TestModel.cpp" />
     <ClCompile Include="TestMouse.cpp" />
+    <ClCompile Include="TestTexture.cpp" />
     <ClCompile Include="TestTriangle.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -182,6 +183,7 @@
     <ClInclude Include="TestKey.h" />
     <ClInclude Include="TestModel.h" />
     <ClInclude Include="TestMouse.h" />
+    <ClInclude Include="TestTexture.h" />
     <ClInclude Include="TestTriangle.h" />
   </ItemGroup>
   <ItemGroup>
@@ -216,6 +218,22 @@
     <CopyFileToFolders Include="MovingStones.wav">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
       <FileType>Document</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </CopyFileToFolders>
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="VTexture.glsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <FileType>Text</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </CopyFileToFolders>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="FTexture.glsl" />
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="texture.bmp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
     </CopyFileToFolders>
   </ItemGroup>

@@ -63,6 +63,9 @@
     <ClCompile Include="RubikGame.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="TestTexture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameInterface.h">
@@ -110,6 +113,9 @@
     <ClInclude Include="RubikGame.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="TestTexture.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="FSimple.glsl">
@@ -127,5 +133,16 @@
     <CopyFileToFolders Include="MovingStones.wav">
       <Filter>Resource Files</Filter>
     </CopyFileToFolders>
+    <CopyFileToFolders Include="VTexture.glsl">
+      <Filter>Shader</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="texture.bmp">
+      <Filter>Resource Files</Filter>
+    </CopyFileToFolders>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="FTexture.glsl">
+      <Filter>Shader</Filter>
+    </Text>
   </ItemGroup>
 </Project>
