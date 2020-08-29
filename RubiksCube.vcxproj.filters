@@ -21,9 +21,6 @@
     <ClCompile Include="RubiksCube.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GameInterface.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="CubeModel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -33,16 +30,7 @@
     <ClCompile Include="ShaderUtil.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TestTriangle.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="CubieRenderer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="TestCubie.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="TestCompoundCube.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="KeyboardObserver.cpp">
@@ -51,27 +39,12 @@
     <ClCompile Include="InputSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TestKey.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="TestMouse.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="TestModel.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="RubikGame.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="TestTexture.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameInterface.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="RubiksCube.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CubeModel.h">
@@ -83,16 +56,7 @@
     <ClInclude Include="ShaderUtil.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="TestTriangle.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="CubieRenderer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="TestCubie.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="TestCompoundCube.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="KeyboardObserver.h">
@@ -101,35 +65,11 @@
     <ClInclude Include="InputSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="TestKey.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="TestMouse.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="TestModel.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="RubikGame.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="TestTexture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <CopyFileToFolders Include="FSimple.glsl">
-      <Filter>Shader</Filter>
-    </CopyFileToFolders>
-    <CopyFileToFolders Include="VSimple.glsl">
-      <Filter>Shader</Filter>
-    </CopyFileToFolders>
-    <CopyFileToFolders Include="FColor.glsl">
-      <Filter>Shader</Filter>
-    </CopyFileToFolders>
-    <CopyFileToFolders Include="VColor.glsl">
-      <Filter>Shader</Filter>
-    </CopyFileToFolders>
     <CopyFileToFolders Include="MovingStones.wav">
       <Filter>Resource Files</Filter>
     </CopyFileToFolders>

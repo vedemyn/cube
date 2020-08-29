@@ -36,6 +36,8 @@ void RubikGame::Initialize(GLFWwindow* window)
 	m_inputSystem.ObserveKey(GLFW_KEY_F9);
 	m_currentlyRotatedSlice = -1;
 	m_rotating = false;
+	m_finishRotatingAfterRelease = false;
+	m_freezeAutomaticRotation = false;
 	m_animationRotationAngle = 0.0f;
 	m_animationSpeed = 120.0f;
 	m_globalTransformation = glm::mat4(1.0f);
@@ -82,7 +84,7 @@ void RubikGame::Render(float aspectRatio)
 
 				compound = glm::translate(compound, glm::vec3((i - 1) * (offset), (j - 1) * (offset), (k - 1) * (offset))); //moves the cubies to the right position
 
-				auto currentCubie = m_cubeModel.getCubie(2 - i, j, 2 - k);
+				Cubie currentCubie = m_cubeModel.getCubie(2 - i, j, 2 - k);
 
 				if (!m_rotating)
 				{
@@ -95,10 +97,7 @@ void RubikGame::Render(float aspectRatio)
 				}
 
 				m_cubieRenderer.SetColors(m_cubeColors[i][j][k][0], m_cubeColors[i][j][k][1], m_cubeColors[i][j][k][2], m_cubeColors[i][j][k][3], m_cubeColors[i][j][k][4], m_cubeColors[i][j][k][5]);
-				//	left, right, up, down, front, back);
 				m_cubieRenderer.Render(compound);
-
-
 			}
 
 }

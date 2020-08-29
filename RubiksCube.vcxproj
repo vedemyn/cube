@@ -154,19 +154,11 @@
     <ClCompile Include="CubeModel.cpp" />
     <ClCompile Include="Cubie.cpp" />
     <ClCompile Include="CubieRenderer.cpp" />
-    <ClCompile Include="GameInterface.cpp" />
     <ClCompile Include="InputSystem.cpp" />
     <ClCompile Include="KeyboardObserver.cpp" />
     <ClCompile Include="RubikGame.cpp" />
     <ClCompile Include="RubiksCube.cpp" />
     <ClCompile Include="ShaderUtil.cpp" />
-    <ClCompile Include="TestCompoundCube.cpp" />
-    <ClCompile Include="TestCubie.cpp" />
-    <ClCompile Include="TestKey.cpp" />
-    <ClCompile Include="TestModel.cpp" />
-    <ClCompile Include="TestMouse.cpp" />
-    <ClCompile Include="TestTexture.cpp" />
-    <ClCompile Include="TestTriangle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CubeModel.h" />
@@ -176,43 +168,7 @@
     <ClInclude Include="InputSystem.h" />
     <ClInclude Include="KeyboardObserver.h" />
     <ClInclude Include="RubikGame.h" />
-    <ClInclude Include="RubiksCube.h" />
     <ClInclude Include="ShaderUtil.h" />
-    <ClInclude Include="TestCompoundCube.h" />
-    <ClInclude Include="TestCubie.h" />
-    <ClInclude Include="TestKey.h" />
-    <ClInclude Include="TestModel.h" />
-    <ClInclude Include="TestMouse.h" />
-    <ClInclude Include="TestTexture.h" />
-    <ClInclude Include="TestTriangle.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <CopyFileToFolders Include="VSimple.glsl">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
-      <FileType>Text</FileType>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
-    </CopyFileToFolders>
-  </ItemGroup>
-  <ItemGroup>
-    <CopyFileToFolders Include="FSimple.glsl">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
-      <FileType>Document</FileType>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
-    </CopyFileToFolders>
-  </ItemGroup>
-  <ItemGroup>
-    <CopyFileToFolders Include="VColor.glsl">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
-      <FileType>Text</FileType>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
-    </CopyFileToFolders>
-  </ItemGroup>
-  <ItemGroup>
-    <CopyFileToFolders Include="FColor.glsl">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
-      <FileType>Document</FileType>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
-    </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="MovingStones.wav">

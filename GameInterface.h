@@ -1,6 +1,6 @@
 #pragma once
 
-struct GLFWwindow; //hack?
+struct GLFWwindow;
 class GameInterface
 {
 public:

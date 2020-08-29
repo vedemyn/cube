@@ -4,7 +4,7 @@
 Cubie::Cubie(int position[])
 {
 	//cubie type can be determined by the number of 1s in the position
-	// 3 == center, 2 == middle, 1 == edge, 0 == corner lol
+	// 3 == center, 2 == middle, 1 == edge, 0 == corner 
 	colors.insert({ "RED", glm::vec3(1.0, 0.0, 0.0) });
 	colors.insert({ "GREEN", glm::vec3(0.0f, 0.608f, 0.282f) });
 	colors.insert({ "BLUE", glm::vec3(0.0f, 0.271f, 0.678f) });
@@ -73,10 +73,10 @@ Cubie Cubie::RotatedCubie(Axis rotatedAround)
 	for (int i = 0; i < numberOfRelevantSides; i++)
 	{
 		if (rotatedAround == Axis::X_AXIS) {
-			faces[i].facing = glm::rotateX(faces[i].facing, (float)glm::radians(270.0)); //apparently this is counter-clockwise in glm, so 270 instead of 90
+			faces[i].facing = glm::rotateX(faces[i].facing, (float)glm::radians(270.0)); //meine achsen gehen teilweise in eine andere richtung als die von gl, deswegen hier komische winkel
 		}
 		else if (rotatedAround == Axis::Y_AXIS) {
-			faces[i].facing = glm::rotateY(faces[i].facing, (float)glm::radians(90.0)); //axes are brainfuck
+			faces[i].facing = glm::rotateY(faces[i].facing, (float)glm::radians(90.0)); 
 		}
 		else if (rotatedAround == Axis::Z_AXIS) {
 			faces[i].facing = glm::rotateZ(faces[i].facing, (float)glm::radians(270.0));

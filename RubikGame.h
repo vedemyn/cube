@@ -40,8 +40,8 @@ private:
 	bool m_rotating;
 	glm::vec3 m_initialContactPoint;
 	glm::vec3 m_contactPlaneNormal;
-	bool m_finishRotatingAfterRelease = false;
-	bool m_freezeAutomaticRotation = false;
+	bool m_finishRotatingAfterRelease;
+	bool m_freezeAutomaticRotation;
 
 };
 

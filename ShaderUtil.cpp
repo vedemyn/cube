@@ -37,9 +37,9 @@ GLuint ShaderUtil::CreateShaderProgram(const char* vertexFilename, const char* f
 	}
 
 	GLuint shaderProgram = glCreateProgram(); //erzeuge ein shader program
-	glAttachShader(shaderProgram, vertexShader); //attache vertex shader (zuerst?)
+	glAttachShader(shaderProgram, vertexShader); //attache vertex shader (zuerst)
 	glAttachShader(shaderProgram, fragmentShader); //attache dann fragment shader
-	glLinkProgram(shaderProgram); //das ganze wird hiermit aufgerufen
+	glLinkProgram(shaderProgram); //das ganze wird hiermit zusammengebaut
 	PrintOGlErrors(); //fehler konnen auftauchen wenn eingabedaten vom frag nicht zu ausgabe von vert passen
 	int linked;
 	glGetProgramiv(shaderProgram, GL_LINK_STATUS, &linked); //wie eben

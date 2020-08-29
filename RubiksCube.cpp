@@ -3,24 +3,10 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
-#include "TestTriangle.h"
-#include "TestCubie.h"
-#include "TestCompoundCube.h"
-#include "TestKey.h"
-#include "TestMouse.h"
-#include "TestModel.h"
 #include "RubikGame.h"
-#include "TestTexture.h"
 
 // Collection of test classes.
 GameInterface gDummyTest;
-TestTriangle gTestTriangle;
-TestCubie gTestCubie;
-TestCompoundCube gTestCompoundCube;
-TestKey gTestKey;
-TestMouse gTestMouse;
-TestModel gTestModel;
-TestTexture gTestTexture;
 RubikGame gRubikGame;
 
 GameInterface* gUsedInterface;
@@ -78,19 +64,11 @@ void RunCoreloop(GLFWwindow* window)
 void ShutdownSystem()
 {
 	gUsedInterface->ClearResources();
-	glfwTerminate(); //beendet die library
+	glfwTerminate();
 }
 
 int main()
 {
-	//gUsedInterface = &gDummyTest;
-	//gUsedInterface = &gTestTriangle;
-	//gUsedInterface = &gTestCubie;
-	//gUsedInterface = &gTestCompoundCube;
-	//gUsedInterface = &gTestKey;
-	//gUsedInterface = &gTestMouse;
-	//gUsedInterface = &gTestModel;
-	//gUsedInterface = &gTestTexture;
 	gUsedInterface = &gRubikGame;
 	GLFWwindow* window = InitializeSystem();
 	RunCoreloop(window);

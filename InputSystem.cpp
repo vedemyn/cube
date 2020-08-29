@@ -69,7 +69,7 @@ void InputSystem::GetPickingRay(const glm::mat4& transformationMatrix, glm::vec3
 	glm::vec4 farPoint = nearPoint; //wo soll strahl enden
 	farPoint.z = 0.99f; //nur halt fast am ende des bereiches
 
-	glm::mat4 inverse = glm::inverse(transformationMatrix);  //verstehe ich noch nicht ganz
+	glm::mat4 inverse = glm::inverse(transformationMatrix); 
 	nearPoint = inverse * nearPoint;
 	farPoint = inverse * farPoint;
 
@@ -89,12 +89,12 @@ void InputSystem::GetMousePosition(double& xpos, double& ypos)
 
 float InputSystem::GetDeltaMouseX()
 {
-	return m_deltaMouseX;
+	return  (float)m_deltaMouseX;
 }
 
 float InputSystem::GetDeltaMouseY()
 {
-	return m_deltaMouseY;
+	return (float)m_deltaMouseY;
 }
 
 

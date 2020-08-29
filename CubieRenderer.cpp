@@ -22,19 +22,15 @@ void CubieRenderer::Initialize()
 		}
 	}
 
-	//m_shaderProgram = ShaderUtil::CreateShaderProgram("VColor.glsl", "FColor.glsl");
 	m_shaderProgram = ShaderUtil::CreateShaderProgram("VTexture.glsl", "FTexture.glsl");
 	m_transformLocation = glGetUniformLocation(m_shaderProgram, "transformation");
 
 	glGenVertexArrays(1, &m_arrayBufferObject);
 	glGenBuffers(2, m_vertexBufferObject); //wir wollen 2, pos + col
-	//glGenBuffers(1, &m_vertexBufferObject);
-
 
 	glBindVertexArray(m_arrayBufferObject);
 
 	glBindBuffer(GL_ARRAY_BUFFER, m_vertexBufferObject[0]);
-	//glBindBuffer(GL_ARRAY_BUFFER, m_vertexBufferObject);
 	TranscribeToFloatArray(positionField, floatArray);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(floatArray), floatArray, GL_STATIC_DRAW);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
@@ -46,36 +42,30 @@ void CubieRenderer::Initialize()
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(1);
 
-	//glBindBuffer(GL_ARRAY_BUFFER, 0);
-	//glBindVertexArray(0);
 	glBindVertexArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-	/**/
 	int w;
 	int h;
 	int comp;
 	unsigned char* image = stbi_load("texture.bmp", &w, &h, &comp, STBI_rgb_alpha);
 	glGenTextures(1, &m_texture);
-	//glBindTexture(GL_TEXTURE_2D, m_texture);
 	glBindTexture(GL_TEXTURE_CUBE_MAP, m_texture);
-	//glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
 	glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X, 0, GL_RGBA, w, h, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
 	glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_X, 0, GL_RGBA, w, h, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
 	glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_Y, 0, GL_RGBA, w, h, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
 	glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_Y, 0, GL_RGBA, w, h, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
 	glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_Z, 0, GL_RGBA, w, h, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
 	glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_Z, 0, GL_RGBA, w, h, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
-	//glGenerateMipmap(GL_TEXTURE_2D);
-	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glGenerateMipmap(GL_TEXTURE_2D);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR); // setze welche filteringmethode gl fur die textur nutzen soll, muss passieren, sonst schwarz
 	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE); //setze wie gl die textur wrappen soll, hilft potenziell an den edges probleme zu vermeiden
 	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
 	glBindTexture(GL_TEXTURE_2D, 0);
 
 	stbi_image_free(image);
-	/**/
 }
 
 void CubieRenderer::Render(const glm::mat4& transformationMatrix)
@@ -84,12 +74,11 @@ void CubieRenderer::Render(const glm::mat4& transformationMatrix)
 	glBindVertexArray(m_arrayBufferObject);
 
 	glUniformMatrix4fv(m_transformLocation, 1, GL_FALSE, glm::value_ptr(transformationMatrix));
-	/**/
+
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, m_texture);
-	/**/
-	glDrawArrays(GL_TRIANGLES, 0, 6 * 6);
 
+	glDrawArrays(GL_TRIANGLES, 0, 6 * 6);
 
 	glBindVertexArray(0);
 	glUseProgram(0);
@@ -98,7 +87,6 @@ void CubieRenderer::Render(const glm::mat4& transformationMatrix)
 void CubieRenderer::ClearResources()
 {
 	glDeleteBuffers(2, m_vertexBufferObject);
-	//glDeleteBuffers(1, &m_vertexBufferObject);
 	glDeleteVertexArrays(1, &m_arrayBufferObject);
 	glDeleteProgram(m_shaderProgram);
 
@@ -141,7 +129,7 @@ void CubieRenderer::AddSideColor(int sideType, int direction, std::vector<glm::v
 			//left, orange
 			color = glm::vec3(1.0f, 0.349f, 0.0f);
 		if (sideType == 1)
-			//up (down actually?), white
+			//up, white
 			color = glm::vec3(1.0f, 1.0f, 1.0f);
 		if (sideType == 2)
 			//back, blue
@@ -151,9 +139,9 @@ void CubieRenderer::AddSideColor(int sideType, int direction, std::vector<glm::v
 	{
 		if (sideType == 0)
 			//right, red
-			color = glm::vec3(1.0, 0.0, 0.0);//glm::vec3(0.725f, 0.0f, 0.0f);
+			color = glm::vec3(1.0, 0.0, 0.0);
 		if (sideType == 1)
-			//down (up actually), yellow
+			//down, yellow
 			color = glm::vec3(1.0f, 0.835f, 0.0f);
 		if (sideType == 2)
 			//front, green
@@ -167,7 +155,6 @@ void CubieRenderer::AddSideColor(int sideType, int direction, std::vector<glm::v
 
 void CubieRenderer::SetColors(glm::vec3 left, glm::vec3 right, glm::vec3 up, glm::vec3 down, glm::vec3 front, glm::vec3 back)
 {
-	
 	float floatArray[6 * 6 * 3];
 	std::vector<glm::vec3> colorField;
 
@@ -196,8 +183,6 @@ void CubieRenderer::SetColors(glm::vec3 left, glm::vec3 right, glm::vec3 up, glm
 		colorField.push_back(back);
 	}
 
-
-
 	glBindVertexArray(m_arrayBufferObject);
 	glBindBuffer(GL_ARRAY_BUFFER, m_vertexBufferObject[1]);
 	TranscribeToFloatArray(colorField, floatArray);
@@ -207,7 +192,6 @@ void CubieRenderer::SetColors(glm::vec3 left, glm::vec3 right, glm::vec3 up, glm
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
-	/**/
 }
 
 void CubieRenderer::TranscribeToFloatArray(std::vector<glm::vec3>& vecArray, float* floatArray)

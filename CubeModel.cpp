@@ -54,8 +54,6 @@ void CubeModel::RotateSlice(Axis axis, int sliceNumber, bool rotateClockwise)
 
 			//middle cubie stays the same, no need to do anything
 
-
-
 		}
 		else if (axis == Axis::Y_AXIS)
 		{
@@ -104,9 +102,9 @@ Cubie CubeModel::getCubie(int x, int y, int z)
 {
 	return cubies[x][y][z];
 }
-
+/* wurde benutzt um das modell zu testen, mit farben die strings waren - jetzt nicht mehr nötig
 void CubeModel::PrintCube()
-{ /*
+{ 
 	std::cout << "Front Side: " << std::endl;
 	std::cout << " [ " << cubies[0][2][2].FaceByFacing(glm::vec3(0.0f, 0.0f, 1.0f)) << " ] " << " [ " << cubies[1][2][2].FaceByFacing(glm::vec3(0.0f, 0.0f, 1.0f)) << " ] " << " [ " << cubies[2][2][2].FaceByFacing(glm::vec3(0.0f, 0.0f, 1.0f)) << " ] " << std::endl;
 	std::cout << " [ " << cubies[0][1][2].FaceByFacing(glm::vec3(0.0f, 0.0f, 1.0f)) << " ] " << " [ " << cubies[1][1][2].FaceByFacing(glm::vec3(0.0f, 0.0f, 1.0f)) << " ] " << " [ " << cubies[2][1][2].FaceByFacing(glm::vec3(0.0f, 0.0f, 1.0f)) << " ] " << std::endl;
@@ -138,14 +136,6 @@ void CubeModel::PrintCube()
 	std::cout << " [ " << cubies[2][0][2].FaceByFacing(glm::vec3(1.0f, 0.0f, 0.0f)) << " ] " << " [ " << cubies[2][0][1].FaceByFacing(glm::vec3(1.0f, 0.0f, 0.0f)) << " ] " << " [ " << cubies[2][0][0].FaceByFacing(glm::vec3(1.0f, 0.0f, 0.0f)) << " ] " << std::endl;
 
 	std::cout << "====================================================================================" << std::endl;
-	*/
-	}
-
-
-
-
-
-
-
-
-
+	
+}
+*/
