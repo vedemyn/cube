@@ -1,6 +1,10 @@
 #include "CubieRenderer.h"
 #include "ShaderUtil.h"
 #include <glm/gtc/type_ptr.hpp>
+/**/
+#define STB_IMAGE_IMPLEMENTATION
+#include "stb_image.h"
+/**/
 
 void CubieRenderer::Initialize()
 {
@@ -18,29 +22,49 @@ void CubieRenderer::Initialize()
 		}
 	}
 
-	m_shaderProgram = ShaderUtil::CreateShaderProgram("VColor.glsl", "FColor.glsl");
+	//m_shaderProgram = ShaderUtil::CreateShaderProgram("VColor.glsl", "FColor.glsl");
+	m_shaderProgram = ShaderUtil::CreateShaderProgram("VTexture.glsl", "FTexture.glsl");
 	m_transformLocation = glGetUniformLocation(m_shaderProgram, "transformation");
 
 	glGenVertexArrays(1, &m_arrayBufferObject);
-	glGenBuffers(2, m_vertexBufferObject); //wir wollen 2, pos + col
+	//glGenBuffers(2, m_vertexBufferObject); //wir wollen 2, pos + col
+	glGenBuffers(1, &m_vertexBufferObject); 
 
 
 	glBindVertexArray(m_arrayBufferObject);
 
-	glBindBuffer(GL_ARRAY_BUFFER, m_vertexBufferObject[0]);
+	//glBindBuffer(GL_ARRAY_BUFFER, m_vertexBufferObject[0]);
+	glBindBuffer(GL_ARRAY_BUFFER, m_vertexBufferObject);
 	TranscribeToFloatArray(positionField, floatArray);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(floatArray), floatArray, GL_STATIC_DRAW);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
-
+ /*
 	glBindBuffer(GL_ARRAY_BUFFER, m_vertexBufferObject[1]);
 	TranscribeToFloatArray(colorField, floatArray);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(floatArray), floatArray, GL_STATIC_DRAW);
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(1);
+*/
 
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	//glBindBuffer(GL_ARRAY_BUFFER, 0);
+	//glBindVertexArray(0);
 	glBindVertexArray(0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	
+	/**/
+	int w;
+	int h;
+	int comp;
+	unsigned char* image = stbi_load("texture.bmp", &w, &h, &comp, STBI_rgb_alpha);
+	glGenTextures(1, &m_texture);
+	glBindTexture(GL_TEXTURE_2D, m_texture);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
+	glGenerateMipmap(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	stbi_image_free(image);
+	/**/
 }
 
 void CubieRenderer::Render(const glm::mat4& transformationMatrix)
@@ -49,7 +73,12 @@ void CubieRenderer::Render(const glm::mat4& transformationMatrix)
 	glBindVertexArray(m_arrayBufferObject);
 
 	glUniformMatrix4fv(m_transformLocation, 1, GL_FALSE, glm::value_ptr(transformationMatrix));
+	/**/
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, m_texture);
+	/**/
 	glDrawArrays(GL_TRIANGLES, 0, 6 * 6);
+
 
 	glBindVertexArray(0);
 	glUseProgram(0);
@@ -57,9 +86,12 @@ void CubieRenderer::Render(const glm::mat4& transformationMatrix)
 
 void CubieRenderer::ClearResources()
 {
-	glDeleteBuffers(2, m_vertexBufferObject); 
+	//glDeleteBuffers(2, m_vertexBufferObject); 
+	glDeleteBuffers(1, &m_vertexBufferObject); 
 	glDeleteVertexArrays(1, &m_arrayBufferObject);
 	glDeleteProgram(m_shaderProgram);
+
+	glDeleteTextures(1, &m_texture);
 }
 
 void CubieRenderer::AddSidePosition(int sideType, int direction, std::vector<glm::vec3>& positionArray)
@@ -124,6 +156,7 @@ void CubieRenderer::AddSideColor(int sideType, int direction, std::vector<glm::v
 
 void CubieRenderer::SetColors(glm::vec3 left, glm::vec3 right, glm::vec3 up, glm::vec3 down, glm::vec3 front, glm::vec3 back)
 {
+	/*
 	float floatArray[6 * 6 * 3];
 	std::vector<glm::vec3> colorField;
 	
@@ -163,6 +196,7 @@ void CubieRenderer::SetColors(glm::vec3 left, glm::vec3 right, glm::vec3 up, glm
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
+	/**/
 }
 
 void CubieRenderer::TranscribeToFloatArray(std::vector<glm::vec3>& vecArray, float* floatArray)

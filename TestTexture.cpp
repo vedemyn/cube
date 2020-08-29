@@ -3,8 +3,8 @@
 #include <glm/glm.hpp>
 #include <glm/ext.hpp>
 
-#define STB_IMAGE_IMPLEMENTATION
-#include "stb_image.h"
+//#define STB_IMAGE_IMPLEMENTATION
+//#include "stb_image.h"
 
 void TestTexture::Initialize()
 {
@@ -31,6 +31,7 @@ void TestTexture::Initialize()
 	glBindBuffer(GL_ARRAY_BUFFER, 0); //wie oben reihenfolge wichtig
 	
 
+	/*
 	int w;
 	int h;
 	int comp;
@@ -42,7 +43,7 @@ void TestTexture::Initialize()
 	glBindTexture(GL_TEXTURE_2D, 0);
 
 	stbi_image_free(image);
-
+*/
 
 }
 
@@ -58,8 +59,8 @@ void TestTexture::Render(float aspectRatio)
 
 	glUniformMatrix4fv(m_transformLocation, 1, GL_FALSE, glm::value_ptr(globalTransformation)); //binde matrix an parameter in meinem vertex shader (deswegen haben wir vorher die transform location ermittelt)
 
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, m_texture);
+	//glActiveTexture(GL_TEXTURE0);
+	//glBindTexture(GL_TEXTURE_2D, m_texture);
 
 	glDrawArrays(GL_TRIANGLES, 0, 3); //hier zeichnen wir (unindiziert) (es gibt 2 arten) zeichenmodus, anfangsindex, wie viele vertices
 
@@ -76,6 +77,6 @@ void TestTexture::ClearResources()
 	glDeleteVertexArrays(1, &m_arrayBufferObject);
 	glDeleteProgram(m_shaderProgram);
 
-	glDeleteTextures(1, &m_texture);
+	//glDeleteTextures(1, &m_texture);
 }
 
