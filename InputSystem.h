@@ -28,6 +28,7 @@ public:
 
 	float GetDeltaMouseX();
 	float GetDeltaMouseY();
+	
 
 private:
 	std::map<int, KeyboardObserver> m_keyMapper;

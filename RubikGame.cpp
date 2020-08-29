@@ -34,6 +34,7 @@ void RubikGame::Initialize(GLFWwindow* window)
 	m_inputSystem.ObserveKey(GLFW_KEY_F7);
 	m_inputSystem.ObserveKey(GLFW_KEY_F8);
 	m_inputSystem.ObserveKey(GLFW_KEY_F9);
+	m_inputSystem.ObserveKey(GLFW_KEY_R);
 	m_currentlyRotatedSlice = -1;
 	m_rotating = false;
 	m_finishRotatingAfterRelease = false;
@@ -77,7 +78,6 @@ void RubikGame::Render(float aspectRatio)
 
 					if (axis == m_currentlyRotatedSlice % 3)
 					{
-						std::cout << m_animationRotationAngle << std::endl << std::endl;
 						compound = glm::rotate(compound, glm::radians(m_animationRotationAngle), axisVector);
 					}
 				}
@@ -111,7 +111,10 @@ void RubikGame::Update(double deltaTime)
 {
 	m_inputSystem.Update();
 	if (m_inputSystem.WasKeyPressed(GLFW_KEY_SPACE))
+	{
+		m_cubeModel.CreateCube();
 		m_orientationQuaternion = glm::quat(1.0f, glm::vec3(0.0f, 0.0f, 0.0f));
+	}
 
 	if (m_inputSystem.WasKeyPressed(GLFW_KEY_1))
 		RotateSlice(Axis::X_AXIS, 2, true, false);
@@ -149,6 +152,20 @@ void RubikGame::Update(double deltaTime)
 		RotateSlice(Axis::Z_AXIS, 1, false, false);
 	if (m_inputSystem.WasKeyPressed(GLFW_KEY_F9))
 		RotateSlice(Axis::Z_AXIS, 2, false, false);
+
+
+	if (m_inputSystem.WasKeyPressed(GLFW_KEY_R)) 
+	{
+		//wurfel scramblen
+		for (int i = 0; i < 20; i++)
+		{
+			int axisNumber = std::rand() / (RAND_MAX/3);
+			Axis axis = (axisNumber == 0) ? Axis::X_AXIS : (axisNumber == 1) ? Axis::Y_AXIS : Axis::Z_AXIS;
+			int n = std::rand() / (RAND_MAX/3);
+			bool direction = std::rand() % 2;	
+			m_cubeModel.RotateSlice(axis, n, direction);
+		}
+	}
 
 
 
@@ -200,7 +217,6 @@ void RubikGame::Update(double deltaTime)
 
 		if (std::abs(std::abs(std::fmod(m_animationRotationAngle, 360.0f)) - m_animationEndAngle) < 1.0f)
 		{
-			//std::cout << "test " << std::endl;
 			m_rotating = false;
 			m_animationRotationAngle = m_animationEndAngle;
 		}
